@@ -7,6 +7,11 @@ const port = 3000
 app.set('views',path.join(__dirname,"views"))
 app.set('view engine','pug')
 //
+
+//Thiết lâp thư mục chứa file tĩnh bên FE
+app.use(express.static(path.join(__dirname,"public")))
+//
+
 app.get('/', (req, res) => {
   res.render("client/pages/home.pug" ,
     { pageTitle : "Trang chu"}
