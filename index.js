@@ -1,8 +1,9 @@
 const express = require('express')
 const path = require('path')
+require("dotenv").config()
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://bugbug:Quynh%402005@cluster0.w5nb9za.mongodb.net/tour-management');
-const Tour = mongoose.model('Tour', {
+mongoose.connect(process.env.database);
+const tour = mongoose.model('Tour', {
   name: String,
   major: String,
   age: Number
@@ -28,7 +29,7 @@ app.get('/', (req, res) => {
   })
 })
 app.get('/tours', async (req, res) => {
-  const tourList = await Tour.find({})
+  const tourList = await tour.find({})
   console.log(tourList)
   res.render("client/pages/tour-list", {
     pageTitle: "danh sach tour",
