@@ -1,14 +1,15 @@
 const express = require('express')
 const path = require('path')
 require("dotenv").config()
-const mongoose = require('mongoose');
-mongoose.connect(process.env.database);
+const database = require("./config/database")
 
 const clientRouters =require("./routers/client/index.router")
 
 const app = express()
 const port = 3000
 
+//Ket noi database 
+database.connect()
 // Thiet lap view
 app.set('views', path.join(__dirname, "views"))
 app.set('view engine', 'pug')
