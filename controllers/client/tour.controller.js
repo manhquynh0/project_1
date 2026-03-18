@@ -8,3 +8,13 @@ module.exports.list  = async (req, res) => {
 
   })
 }
+module.exports.detail  = async (req, res) => {
+  const tourList = await tour.find({})
+  console.log(tourList)
+  res.render("client/pages/tour-detail", {
+    pageTitle: "chi tiet tour",
+ 
+
+  })
+}
+
