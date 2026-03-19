@@ -1,7 +1,7 @@
 extends ../layouts/default.pug
 
 block main
-  if (permissions.includes("dashboard-view"))
+    //- if (permissions.includes("dashboard-view"))
     h1.box-title Tổng quan
 
     //- Section 1
@@ -11,25 +11,25 @@ block main
           img(src="/admin/assets/images/section-1-icon-1.svg")
         .inner-content
           .inner-title Quản trị viên
-          .inner-number #{overview.totalAdmin.toLocaleString("vi-VN")}
+          //- .inner-number #{overview.totalAdmin.toLocaleString("vi-VN")}
       .inner-item
         .inner-icon
           img(src="/admin/assets/images/section-1-icon-1.svg")
         .inner-content
           .inner-title Người dùng
-          .inner-number #{overview.totalUser.toLocaleString("vi-VN")}
+          //- .inner-number #{overview.totalUser.toLocaleString("vi-VN")}
       .inner-item
         .inner-icon
           img(src="/admin/assets/images/section-1-icon-2.svg")
         .inner-content
           .inner-title Đơn hàng
-          .inner-number #{overview.totalOrder.toLocaleString("vi-VN")}
+          //- .inner-number #{overview.totalOrder.toLocaleString("vi-VN")}
       .inner-item
         .inner-icon
           img(src="/admin/assets/images/section-1-icon-3.svg")
         .inner-content
           .inner-title Doanh thu
-          .inner-number #{overview.totalPrice.toLocaleString("vi-VN")}đ
+          //- .inner-number #{overview.totalPrice.toLocaleString("vi-VN")}đ
     //- End Section 1
 
     //- Section 2
