@@ -10,3 +10,11 @@ module.exports.forgotPassword = async(req,res) => {
     res.render("admin/pages/forgot-password.pug",{
     pageTitle : "Quen mat khau"})
 }
+module.exports.otpPassword = async(req,res) => {
+    res.render("admin/pages/otp-password.pug",{
+    pageTitle : "OTP"})
+}
+module.exports.resetPassword = async(req,res) => {
+    res.render("admin/pages/reset-password.pug",{
+    pageTitle : "Doi mat khau"})
+}
