@@ -25,9 +25,6 @@ app.use(`/${variableConfig.pathAdmin}`,adminRouters)
 app.use("/", clientRouters)
 
 
-app.get('/cart', (req, res) => {
-  res.send("giooo hang")
-})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
