@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 require("dotenv").config()
 const database = require("./config/database")
-
+const adminRouters =require("./routers/admin/index.router")
 const clientRouters =require("./routers/client/index.router")
 
 const app = express()
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, "public")))
 //
 
 app.use("/", clientRouters)
-
+app.use('/admin',adminRouters)
 
 app.get('/cart', (req, res) => {
   res.send("giooo hang")
