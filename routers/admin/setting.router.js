@@ -1,0 +1,11 @@
+const router = require("express").Router()
+const settingController = require("../../controllers/admin/setting.controller")
+router.get("/list",settingController.list)
+router.get("/website-info",settingController.websiteinfo)
+router.get("/account-admin/list",settingController.accountAdminList)
+router.get("/account-admin/create",settingController.accountAdminCreate)
+router.get("/account-admin/edit",settingController.accountAdminEdit)
+router.get("/role/list",settingController.rolelist)
+router.get("/role/create",settingController.rolecreate)
+router.get("/role/edit",settingController.roleedit)
+module.exports = router
