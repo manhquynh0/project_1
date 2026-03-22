@@ -21,6 +21,9 @@ app.use(express.static(path.join(__dirname, "public")))
 // tao bien toan cuc trong file pug
 app.locals.pathAdmin = variableConfig.pathAdmin
 //
+// cho phep gui data len dang json
+app.use(express.json())
+//
 app.use(`/${variableConfig.pathAdmin}`,adminRouters)
 app.use("/", clientRouters)
 

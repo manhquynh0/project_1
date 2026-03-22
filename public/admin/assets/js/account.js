@@ -50,7 +50,7 @@ if(loginForm) {
         password: password,
         rememberPassword: rememberPassword
       };
-
+       
       fetch(`/${pathAdmin}/account/login`, {
         method: "POST",
         headers: {
@@ -143,28 +143,26 @@ if(registerForm) {
       const password = event.target.password.value;
 
       const dataFinal = {
-        fullName: fullName,
-        email: email,
-        password: password
-      };
-
-      fetch(`/${pathAdmin}/account/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
+       fullName : fullName,
+       email : email,
+       password : password
+      }
+      fetch(`/${pathAdmin}/account/register`,{
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
         },
-        body: JSON.stringify(dataFinal)
+        body : JSON.stringify(dataFinal)
       })
-        .then(res => res.json())
-        .then(data => {
-          if(data.code == "error") {
-            alert(data.message);
-          }
-
-          if(data.code == "success") {
-            window.location.href = `/${pathAdmin}/account/register-initial`;
-          }
-        })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code =="error"){
+          alert(data.message)
+        }
+        if(data.code == "success"){
+          window.location.href =`/${pathAdmin}/account/register-initial`
+        }
+      })
     })
   ;
 }
