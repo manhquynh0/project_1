@@ -1,6 +1,6 @@
 const AccountAdmin = require("../../models/account-admin.model")
 const bcrypt = require("bcryptjs")
-
+const jwt = require("jsonwebtoken")
 
 module.exports.login = async(req,res) => {
     res.render("admin/pages/login.pug",{
@@ -24,11 +24,27 @@ module.exports.loginPost = async(req,res) => {
     message : "mat khau khong dung"
    })}
    if(exitAccount.status !="active") {
-     res.json ({
+     res.json ({ 
     code : "error",
     message : "tai khoan chua duoc kich hoat"
    })
    }
+   // jwt
+   const token = jwt.sign({
+    id : exitAccount.id,
+    email : exitAccount.email
+   },
+   process.env.JWT_SECRET,
+   {
+    expiresIn : "1d" // Token co thoi han 1 ngay
+   }
+)
+// luu token vao cookie
+   res.cookie("token",token,{
+    maxAge : 24 * 60 * 60 * 1000 , // luu duoi dang milisenconds
+    httpOnly : true ,// cookie chi co the truy cap boi may chu web
+    sameSite : "strict"
+   })
     return res.json({
     code: "success",
     message: "Đăng nhập thành công"
