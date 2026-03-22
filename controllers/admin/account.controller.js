@@ -6,10 +6,42 @@ module.exports.login = async(req,res) => {
     res.render("admin/pages/login.pug",{
     pageTitle : "Dang nhap"})
 }
+module.exports.loginPost = async(req,res) => {
+   const { email,password} = req.body
+    const exitAccount = await AccountAdmin.findOne({
+        email : email
+    })
+    if(!exitAccount) {
+         res.json ({
+    code : "error",
+    message : "email khong ton tai trong he thong"
+   })
+    }
+    const isPasswordValid = bcrypt.compareSync(password, exitAccount.password);
+   if(!isPasswordValid){
+    res.json ({
+    code : "error",
+    message : "mat khau khong dung"
+   })}
+   if(exitAccount.status !="active") {
+     res.json ({
+    code : "error",
+    message : "tai khoan chua duoc kich hoat"
+   })
+   }
+    return res.json({
+    code: "success",
+    message: "Đăng nhập thành công"
+  });
+}
+
 module.exports.register = async(req,res) => {
     res.render("admin/pages/register.pug",{
     pageTitle : "Dang ky"})
 }
+
+
+
 
 module.exports.registerPost = async(req,res) => {
    const { fullName,email,password} = req.body
