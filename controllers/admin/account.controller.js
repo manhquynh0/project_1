@@ -56,7 +56,13 @@ module.exports.register = async(req,res) => {
     pageTitle : "Dang ky"})
 }
 
-
+module.exports.logoutPost = async(req,res) => {
+    res.clearCookie("token")
+    res.json({
+        code : "success",
+        message : "dang xuat thanh cong"
+    })
+}
 
 
 module.exports.registerPost = async(req,res) => {
