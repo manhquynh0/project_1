@@ -1,17 +1,19 @@
 const Joi = require("joi")
 
-module.exports.regiterPost = (req,res,next) => {
-   const schema = Joi.object({
-    fullName : Joi.string().
-    required().
-    min(5).
-    max(50).
-    messages({
-        "string.empty" : "Vui long nhap day du ho ten",
-        "string.min(" : "Ho ten phai co it nhat 5 ki tu",
-        "string.max" : "Ho ten toi da 50 ki tu"
+module.exports.registerPost = (req,res,next) => {
+    const schema = Joi.object({
+        fullName : Joi
+        .string()
+        .required()
+        .min(5)
+        .max(50)
+        .messages({
+        "string.empty" : "Vui long nhap mat khau",
+        "string.min" : "Ten phai it nhat 5 ki tu",
+        "string.max" : "Ten toi da co 50 ki tu"
+        
     }),
-    email : Joi
+         email : Joi
     .string()
     .required()
     .email()
@@ -45,7 +47,7 @@ module.exports.regiterPost = (req,res,next) => {
         "password.number" : "Mat khau phai chua it nhat mot chu so",
         "password.special" : "Mat khau phai chua it nhat mot ki tu dac biet",
     })
-   })
+    })
 
    const {error} = schema.validate(req.body)
 if(error){
@@ -108,4 +110,6 @@ if(error){
     return
 }
    next()
+
 }
+

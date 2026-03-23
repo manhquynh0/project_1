@@ -18,7 +18,7 @@ router.use('/user',authMiddleware.verifyTokens,userRouters)
 router.use('/contact',authMiddleware.verifyTokens,contactRouters)
 router.use('/setting',authMiddleware.verifyTokens,settingRouters)
 router.use('/profile',authMiddleware.verifyTokens,profileRouters)
-router.use((req, res) => {
+router.use(authMiddleware.verifyTokens,(req, res) => {
   res.status(404).render("admin/pages/error-404.pug", {
     pageTitle: "404"
   })

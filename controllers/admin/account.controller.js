@@ -24,7 +24,7 @@ module.exports.loginPost = async(req,res) => {
     message : "mat khau khong dung"
    })}
    if(exitAccount.status !="active") {
-     res.json ({ 
+     res.json ({
     code : "error",
     message : "tai khoan chua duoc kich hoat"
    })
@@ -47,14 +47,9 @@ module.exports.loginPost = async(req,res) => {
    })
     return res.json({
     code: "success",
-    message: "Đăng nhập thành công"
-  });
+    message: "Đăng nhập thành công"})
 }
 
-module.exports.register = async(req,res) => {
-    res.render("admin/pages/register.pug",{
-    pageTitle : "Dang ky"})
-}
 
 module.exports.logoutPost = async(req,res) => {
     res.clearCookie("token")
@@ -64,37 +59,40 @@ module.exports.logoutPost = async(req,res) => {
     })
 }
 
+module.exports.register = async(req,res) => {
+    res.render("admin/pages/register.pug",{
+    pageTitle : "Dang ky"})
+}
+
 
 module.exports.registerPost = async(req,res) => {
-   const { fullName,email,password} = req.body
-   const exitAccount = await AccountAdmin.findOne({
-    email : email
-   })
-   if(exitAccount){
-    res.json({
-        code : "error",
-        message : "Email da ton tai trong he thong"
+    const {fullName,email,password} = req.body
+    const exitAccount = await AccountAdmin.findOne({
+        email : email
     })
-    return // them de dung chuong trinh
-   }
-   //ma hoa mat khau voi bcrypt
-const salt = bcrypt.genSaltSync(10); //tao chuoi ngau nhien 10 ki tu
-const hashPassword = bcrypt.hashSync(password, salt);
+    if(exitAccount){
+        res.json({
+            code : "error",
+            message  :"email da duoc dang ki"
+        })
+        return
+    }
+    // ma hoa mat khau su dung bcrypt
+    const salt = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, salt);
 
+    const newAccount = new AccountAdmin ({
+        fullName : fullName,
+        email : email,
+        password : hashPassword,
+        status : "initial"
+    })
+    await newAccount.save()
+      res.json({
+            code : "success",
+            message  :"dang ki thanh cong"
+        })
 
-
-   const newAccount = new AccountAdmin({
-    fullName : fullName,
-    email : email,
-    password : hashPassword,
-    status : "initial"
-   })
-   await newAccount.save()
-
-   res.json ({
-    code : "success",
-    message : "Dang ky tai khoan thanh cong"
-   })
 }
 module.exports.registerInitial = async(req,res) => {
     res.render("admin/pages/register-initial.pug",{

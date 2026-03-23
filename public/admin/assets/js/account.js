@@ -1,3 +1,5 @@
+
+
 // Login Form
 const loginForm = document.querySelector("#login-form");
 if(loginForm) {
@@ -77,7 +79,7 @@ if(loginForm) {
 const registerForm = document.querySelector("#register-form");
 if(registerForm) {
   const validation = new JustValidate('#register-form');
-
+  
   validation
     .addField('#fullName', [
       {
@@ -138,31 +140,33 @@ if(registerForm) {
       },
     ])
     .onSuccess((event) => {
+        event.preventDefault(); 
       const fullName = event.target.fullName.value;
       const email = event.target.email.value;
       const password = event.target.password.value;
-
       const dataFinal = {
-       fullName : fullName,
-       email : email,
-       password : password
+        fullName : fullName,
+        email : email,
+        password : password
       }
       fetch(`/${pathAdmin}/account/register`,{
-        method : "POST",
-        headers : {
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify(dataFinal)
+      method : "POST",
+      headers : {
+        "Content-type" : "application/json"
+      },
+      body : JSON.stringify(dataFinal)
       })
       .then(res => res.json())
       .then(data => {
-        if(data.code =="error"){
+        if(data.code =="error") {
           alert(data.message)
         }
         if(data.code == "success"){
-          window.location.href =`/${pathAdmin}/account/register-initial`
+          window.location.href = `/${pathAdmin}/account/register-initial`
         }
-      })
+      }
+      )
+    
     })
   ;
 }
