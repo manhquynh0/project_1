@@ -1,7 +1,9 @@
 const AccountAdmin = require("../../models/account-admin.model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-
+const { generateOTP } = require("../../helpers/generate.helper")
+const ForgotPassword = require("../../models/forgot-password.model")
+const mailHelper = require("../../helpers/mail.helper")
 module.exports.login = async(req,res) => {
     res.render("admin/pages/login.pug",{
     pageTitle : "Dang nhap"})
@@ -51,6 +53,45 @@ console.log(req.cookies)
     message: "Đăng nhập thành công"})
 }
 
+module.exports.forgotPasswordPost = async(req,res) => {
+       const { email} = req.body
+    const exitAccount = await AccountAdmin.findOne({
+        email : email
+    })
+    if(!exitAccount){
+        res.json({
+            code : "error",
+            message : "Email khong ton tai trong he thong"
+        })
+        return
+    }
+    // kiem tra xem email da ton tai trong forgotpass hay chua
+    const exitEmailforgot = await ForgotPassword.findOne({
+        email : email
+    })
+    if(exitEmailforgot){
+         res.json({
+            code : "error",
+            message : "Vui long gui lai sau 1 phut"
+        })
+        return
+    }
+    const otp = generateOTP()
+    console.log(otp)
+
+    const newRecord = new ForgotPassword({
+        email : email,
+        otp : otp,
+        exprieAt:new Date(Date.now() + 60*1000)
+    }) 
+    await newRecord.save()
+       res.json({
+            code : "success",
+            message : "Mã OTP đã được gửi dến Email của bạn"
+        })
+// gui otp tu dong
+mailHelper.sendMail(email,otp);
+}
 
 module.exports.logoutPost = async(req,res) => {
     res.clearCookie("token")

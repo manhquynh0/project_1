@@ -13,4 +13,7 @@ router.get('/reset-password',accountController.resetPassword)
 router.get('/register-initial',accountController.registerInitial)
 
 router.post('/logout',accountController.logoutPost)
+router.post('/forgot-password',accountController.forgotPasswordPost)
+
+
 module.exports = router;

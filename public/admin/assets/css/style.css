@@ -1614,3 +1614,35 @@ a {
   background-color: #a3e0a3;
 }
 /* End Alert */
+/* Khung hiển thị OTP countdown */
+#otp-countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #007bff;
+  background-color: #e6f0ff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 10px auto 0 auto;
+  width: fit-content;
+}
+
+/* Style riêng cho phần thời gian */
+#countdown-time {
+  font-weight: 700;
+  margin-left: 5px;
+  color: #ff3b30;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Hiệu ứng nhấp nháy khi còn < 1 phút */
+#otp-countdown.warning #countdown-time {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
