@@ -97,7 +97,8 @@ module.exports.loginPost = (req,res,next) => {
         "password.lowercase" : "Mat khau phai chua it nhat mot chu cai thuong",
         "password.number" : "Mat khau phai chua it nhat mot chu so",
         "password.special" : "Mat khau phai chua it nhat mot ki tu dac biet",
-    })
+    }),
+    rememberPassword : Joi.boolean()
    })
 
    const {error} = schema.validate(req.body)

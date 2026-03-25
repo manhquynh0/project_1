@@ -7,7 +7,7 @@ module.exports.login = async(req,res) => {
     pageTitle : "Dang nhap"})
 }
 module.exports.loginPost = async(req,res) => {
-   const { email,password} = req.body
+   const { email,password,rememberPassword} = req.body
     const exitAccount = await AccountAdmin.findOne({
         email : email
     })
@@ -36,12 +36,13 @@ module.exports.loginPost = async(req,res) => {
    },
    process.env.JWT_SECRET,
    {
-    expiresIn : "1d" // Token co thoi han 1 ngay
+    expiresIn : rememberPassword ? "30d" : "1d" // luu mat khau
    }
 )
+console.log(req.cookies)
 // luu token vao cookie
    res.cookie("token",token,{
-    maxAge : 24 * 60 * 60 * 1000 , // luu duoi dang milisenconds
+    maxAge :rememberPassword ? ( 30*24 * 60 * 60 * 1000) :( 24 * 60 * 60 * 1000)   , // luu duoi dang milisenconds
     httpOnly : true ,// cookie chi co the truy cap boi may chu web
     sameSite : "strict"
    })

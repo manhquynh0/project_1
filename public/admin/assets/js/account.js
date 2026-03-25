@@ -50,12 +50,13 @@ if(loginForm) {
     const dataFinal = {
       
       password : password,
-      email : email
+      email : email,
+      rememberPassword
     }
     fetch(`/${pathAdmin}/account/login`,{
       method : "POST",
       headers : {
-        "Content-type" : "application/json"
+        "Content-Type" : "application/json"
       },
       body : JSON.stringify(dataFinal)
     })
@@ -140,7 +141,7 @@ if(registerForm) {
       },
     ])
     .onSuccess((event) => {
-        event.preventDefault(); 
+      
       const fullName = event.target.fullName.value;
       const email = event.target.email.value;
       const password = event.target.password.value;

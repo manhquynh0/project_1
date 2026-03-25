@@ -10,7 +10,7 @@ const settingRouters = require("./setting.router")
 const profileRouters = require("./profile.router")
 const authMiddleware = require("../../middlewares/admin/auth.middleware")
 router.use("/category",authMiddleware.verifyTokens,categoryRouters)
-router.use('/account',authMiddleware.verifyTokens,accountRouters)
+router.use('/account',accountRouters)
 router.use('/dashboard',authMiddleware.verifyTokens,dashboardRouters)
 router.use('/tour',authMiddleware.verifyTokens,tourRouters)
 router.use('/order',authMiddleware.verifyTokens,orderRouters)
@@ -23,4 +23,9 @@ router.use(authMiddleware.verifyTokens,(req, res) => {
     pageTitle: "404"
   })
 })
+
+router.use((req,res,next) => {
+  res.setHeader('Cache-Control','no-store')
+  next()
+}) // xoa bo nho dem
 module.exports = router
