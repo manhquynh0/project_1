@@ -82,7 +82,7 @@ module.exports.forgotPasswordPost = async(req,res) => {
     const newRecord = new ForgotPassword({
         email : email,
         otp : otp,
-        exprieAt:new Date(Date.now() + 60*1000)
+        expireAt:new Date(Date.now() + 60*1000)
     }) 
     await newRecord.save()
        res.json({
@@ -148,7 +148,51 @@ module.exports.otpPassword = async(req,res) => {
     res.render("admin/pages/otp-password.pug",{
     pageTitle : "OTP"})
 }
+module.exports.otpPasswordPost = async(req,res) => {
+   const {email,otp} = req.body
+
+   const exitRecord = await ForgotPassword.findOne({
+    email : email,
+    otp : otp
+   })
+   if(!exitRecord){
+      res.json({
+    code : "error",
+    data : "OTP không chính xác"
+   })
+   return
+ }
+
+   const account=await AccountAdmin.findOne({
+    email : email
+   })
+   // jwt
+   const token = jwt.sign({
+    id : account.id,
+    email : account.email
+   },
+   process.env.JWT_SECRET,
+   {
+    expiresIn :"1d" // luu mat khau
+   }
+)
+console.log(req.cookies)
+// luu token vao cookie
+   res.cookie("token",token,{
+    maxAge :( 24 * 60 * 60 * 1000)   , // luu duoi dang milisenconds
+    httpOnly : true ,// cookie chi co the truy cap boi may chu web
+    sameSite : "strict"
+   })
+    return res.json({
+    code: "success",
+    message: "Xac thuc OTP thành công"
+})
+
+}
 module.exports.resetPassword = async(req,res) => {
     res.render("admin/pages/reset-password.pug",{
     pageTitle : "Doi mat khau"})
+}
+module.exports.resetPasswordPost = async(req,res) => {
+ 
 }

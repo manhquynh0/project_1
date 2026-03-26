@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const schema = new mongoose.Schema({
     email : String,
     otp : String,
-    exprieAt : {
+    expireAt : {
         type : Date,
         expires :0
     }

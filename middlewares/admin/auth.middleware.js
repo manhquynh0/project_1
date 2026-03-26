@@ -23,6 +23,8 @@ module.exports.verifyTokens = async (req,res,next) => {
         res.redirect(`/${pathAdmin}/account/login`)
         return
     }
+
+    
     next()
 }
 }

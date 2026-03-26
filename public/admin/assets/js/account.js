@@ -199,7 +199,7 @@ if (forgotPasswordForm) {
           }
           if (data.code == "success") {
             // redirect sau khi nhận success
-            window.location.href = `/${pathAdmin}/account/otp-password?${email}`;
+            window.location.href = `/${pathAdmin}/account/otp-password?email=${email}`;
           }
         })
         .catch(err => console.error("Lỗi gửi OTP:", err));
