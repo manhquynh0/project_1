@@ -194,5 +194,18 @@ module.exports.resetPassword = async(req,res) => {
     pageTitle : "Doi mat khau"})
 }
 module.exports.resetPasswordPost = async(req,res) => {
- 
+const{password} = req.body
+const salt = await bcrypt.genSaltSync(10);
+const hashPassword = await bcrypt.hashSync(password, salt);
+await AccountAdmin.updateOne(
+    {
+    _id : req.account.id
+},
+{
+    password : hashPassword
+})
+res.json({
+    code : "success",
+    message : "Đổi mật khẩu thành công"
+})
 }

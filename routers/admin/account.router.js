@@ -12,10 +12,10 @@ router.post('/register',accountValidate.registerPost,accountController.registerP
 router.get('/forgot-password',accountController.forgotPassword)
 
 router.get('/otp-password',accountController.otpPassword)
-router.post('/otp-password',accountController.otpPasswordPost)
+router.post('/otp-password',accountValidate.otpPasswordPost,accountController.otpPasswordPost)
 
 router.get('/reset-password',accountController.resetPassword)
-router.post('/reset-password',authMiddleware.resetPasswordPost,accountController.resetPasswordPost)
+router.post('/reset-password',authMiddleware.verifyTokens,accountController.resetPasswordPost)
 
 router.get('/register-initial',accountController.registerInitial)
 

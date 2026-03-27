@@ -333,7 +333,9 @@ if (resetPasswordForm) {
           }
 
           if (data.code == "success") {
+            
             window.location.href = `/${pathAdmin}/dashboard`;
+             alert(data.message);
           }
         })
     });
