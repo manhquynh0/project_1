@@ -1,5 +1,4 @@
 const Joi = require("joi")
-
 module.exports.registerPost = (req, res, next) => {
     const schema = Joi.object({
         fullName: Joi
@@ -62,8 +61,6 @@ module.exports.registerPost = (req, res, next) => {
     }
     next()
 }
-
-
 module.exports.loginPost = (req, res, next) => {
     const schema = Joi.object({
         email: Joi

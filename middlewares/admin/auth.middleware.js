@@ -23,8 +23,8 @@ module.exports.verifyTokens = async (req,res,next) => {
         res.redirect(`/${pathAdmin}/account/login`)
         return
     }
-    req.account = exitAccount;
-    
+    req.account = exitAccount; // cac file controller co the dung
+    res.locals.account = exitAccount // cac file pug co the dung
     next()
 }
 }

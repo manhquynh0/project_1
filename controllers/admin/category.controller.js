@@ -1,10 +1,29 @@
-module.exports.list = async(req,res) => {
+const Category = require("../../models/category.model")
+module.exports.list = async (req, res) => {
     res.render("admin/pages/category-list", {
-    pageTitle : "Dach sach danh muc"
+        pageTitle: "Dach sach danh muc"
     })
 }
-module.exports.create = async(req,res) => {
+module.exports.create = async (req, res) => {
     res.render("admin/pages/category-create", {
-    pageTitle : "Tao danh muc"
+        pageTitle: "Tao danh muc"
+    })
+}
+module.exports.createPost = async (req, res) => {
+    console.log(req.body)
+    if (req.body.position) {
+        req.body.position = parseInt(req.body.position)
+    } else {
+        const totalRecord = await Category.countDocuments({});
+        req.body.position = totalRecord + 1;
+    }
+    req.body.createdBy = req.account.id
+    req.body.updateBy = req.account.id
+    const newRecord = new Category(req.body)
+    await newRecord.save()
+
+    res.json({
+        code: "succes",
+        message: "Tao danh muc thanh cong"
     })
 }
