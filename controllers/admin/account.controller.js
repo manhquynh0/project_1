@@ -52,7 +52,6 @@ console.log(req.cookies)
     code: "success",
     message: "Đăng nhập thành công"})
 }
-
 module.exports.forgotPasswordPost = async(req,res) => {
        const { email} = req.body
     const exitAccount = await AccountAdmin.findOne({
@@ -92,7 +91,6 @@ module.exports.forgotPasswordPost = async(req,res) => {
 // gui otp tu dong
 mailHelper.sendMail(email,otp);
 }
-
 module.exports.logoutPost = async(req,res) => {
     res.clearCookie("token")
     res.json({
@@ -100,13 +98,10 @@ module.exports.logoutPost = async(req,res) => {
         message : "dang xuat thanh cong"
     })
 }
-
 module.exports.register = async(req,res) => {
     res.render("admin/pages/register.pug",{
     pageTitle : "Dang ky"})
 }
-
-
 module.exports.registerPost = async(req,res) => {
     const {fullName,email,password} = req.body
     const exitAccount = await AccountAdmin.findOne({

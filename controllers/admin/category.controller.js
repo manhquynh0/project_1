@@ -19,11 +19,13 @@ module.exports.createPost = async (req, res) => {
     }
     req.body.createdBy = req.account.id
     req.body.updateBy = req.account.id
+    req.body.avatar = req.file ? req.file.path : ""
+    console.log(req.file)
     const newRecord = new Category(req.body)
     await newRecord.save()
 
     res.json({
-        code: "succes",
+        code: "success",
         message: "Tao danh muc thanh cong"
     })
 }

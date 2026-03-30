@@ -10,6 +10,7 @@ router.get('/register',accountController.register)
 router.post('/register',accountValidate.registerPost,accountController.registerPost)
 
 router.get('/forgot-password',accountController.forgotPassword)
+router.post('/forgot-password',accountController.forgotPasswordPost)
 
 router.get('/otp-password',accountController.otpPassword)
 router.post('/otp-password',accountValidate.otpPasswordPost,accountController.otpPasswordPost)
@@ -20,7 +21,7 @@ router.post('/reset-password',authMiddleware.verifyTokens,accountController.rese
 router.get('/register-initial',accountController.registerInitial)
 
 router.post('/logout',accountController.logoutPost)
-router.post('/forgot-password',accountController.forgotPasswordPost)
+
 
 
 module.exports = router;
