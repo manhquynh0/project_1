@@ -6,7 +6,8 @@ const adminRouters =require("./routers/admin/index.router")
 const clientRouters =require("./routers/client/index.router")
 const variableConfig = require("./config/variable")
 const cookieParser = require("cookie-parser");
-
+const flash = require('express-flash')
+const session = require("express-session");
 const app = express()
 const port = 3000
 
@@ -30,7 +31,16 @@ app.use(express.json())
 //
 
 // su dung cookie-parse
-app.use(cookieParser())
+app.use(cookieParser("tuyetcute"))
+
+//Nhúng flash
+app.use(session({
+  secret: "tuyetcute",   
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}));
+app.use(flash());
 //
 app.use(`/${variableConfig.pathAdmin}`,adminRouters)
 app.use("/", clientRouters)

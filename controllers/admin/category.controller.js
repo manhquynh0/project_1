@@ -1,8 +1,14 @@
 const Category = require("../../models/category.model")
 const categoryHelper = require("../../helpers/category.helper");
 module.exports.list = async (req, res) => {
+      const categoryList = await Category.find({
+        deleted: false
+    }).sort({
+        position : "desc"
+    })
     res.render("admin/pages/category-list", {
-        pageTitle: "Dach sach danh muc"
+        pageTitle: "Dach sach danh muc",
+        categoryList: categoryList
     })
 }
 module.exports.create = async (req, res) => {
@@ -31,9 +37,8 @@ module.exports.createPost = async (req, res) => {
     console.log(req.file)
     const newRecord = new Category(req.body)
     await newRecord.save()
-
+req.flash("success","Tạo danh mục thành công")
     res.json({
         code: "success",
-        message: "Tao danh muc thanh cong"
     })
 }
