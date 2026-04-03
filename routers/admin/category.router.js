@@ -7,7 +7,7 @@ const categoryController = require("../../controllers/admin/category.controller"
 router.get("/list",categoryController.list)
 router.get("/create",categoryController.create)
 
-
+router.patch("/delete/:id",categoryController.deletePatch)
 
 router.post('/create', upload.single('avatar'), categoryValidate.categoryPost, categoryController.createPost)
 

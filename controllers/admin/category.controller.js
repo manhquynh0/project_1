@@ -53,7 +53,6 @@ module.exports.create = async (req, res) => {
 }
 module.exports.createPost = async (req, res) => {
   try {
-    console.log(req.body)
     if (req.body.position) {
       req.body.position = parseInt(req.body.position)
     } else {
@@ -87,22 +86,21 @@ module.exports.editPatch = async (req, res) => {
       req.body.position = totalRecord + 1;
     }
     req.body.updateBy = req.account.id
-    if(req.file){
-       req.body.avatar = req.file.path
-    }
-    else {
+    if (req.file) {
+      req.body.avatar = req.file.path
+    } else {
       delete req.body.avatar
     }
-   
+
     await Category.updateOne({
-      _id : id,
-      deleted : false
+      _id: id,
+      deleted: false
     }, req.body)
     req.flash("success", "Cập nhật danh mục thành công")
     res.json({
       code: "success",
     })
-  } catch(error){
+  } catch (error) {
     res.json({
       code: "error",
       message: "Cập nhật danh mục thất bại"
@@ -130,6 +128,29 @@ module.exports.edit = async (req, res) => {
   } catch (error) {
     res.render("admin/pages/error-404.pug", {
       pageTitle: "Lỗi"
+    })
+  }
+}
+module.exports.deletePatch = async (req, res) => {
+  try {
+
+    const id = req.params.id
+
+    await Category.updateOne({
+      _id: id
+    }, {
+      deleted: true,
+      deletedBy: req.account.id,
+      deletedAt: Date.now()
+    })
+    req.flash("success", "Xoa thanh cong")
+    res.json({
+      code: "success"
+    })
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: "ID khong hop le"
     })
   }
 }
