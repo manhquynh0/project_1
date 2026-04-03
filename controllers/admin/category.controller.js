@@ -1,10 +1,36 @@
 const Category = require("../../models/category.model")
+const moment = require("moment");
 const categoryHelper = require("../../helpers/category.helper");
 const AccountAdmin = require("../../models/account-admin.model")
 module.exports.list = async (req, res) => {
-  const categoryList = await Category.find({
-    deleted: false
-  }).sort({
+   console.log(req.query.startDate)
+  const find = {
+    deleted : false
+  }
+  // loc theo trang thai
+  if(req.query.status){
+    find.status = req.query.status
+  }
+  // loc theo nguoi tao
+  if(req.query.createdBy){
+    find.createdBy = req.query.createdBy
+  }
+
+  // loc theo ngay tao
+  const dateFilter = {};
+  if(req.query.startDate) {
+    const startDate = moment(req.query.startDate).startOf("date").toDate();
+    dateFilter.$gte = startDate;
+  }
+  if(req.query.endDate) {
+    const endDate = moment(req.query.endDate).endOf("date").toDate();
+    dateFilter.$lte = endDate;
+  }
+  if(Object.keys(dateFilter).length > 0) {
+    find.createdAt = dateFilter;
+  }
+
+  const categoryList = await Category.find(find).sort({
     position: "desc"
   })
 
@@ -34,9 +60,15 @@ module.exports.list = async (req, res) => {
       item.updatedAt.toLocaleString("vi-VN") :
       ""
   }
+
+const accountAdminList = await AccountAdmin
+    .find({})
+    .select("id fullName"); // chi lay ra name
+
   res.render("admin/pages/category-list", {
     pageTitle: "Dach sach danh muc",
-    categoryList: categoryList
+    categoryList: categoryList,
+    accountAdminList: accountAdminList
   })
 }
 module.exports.create = async (req, res) => {
