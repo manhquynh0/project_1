@@ -1,9 +1,10 @@
 const Category = require("../../models/category.model")
 const moment = require("moment");
+const slugify = require('slugify');
 const categoryHelper = require("../../helpers/category.helper");
 const AccountAdmin = require("../../models/account-admin.model")
 module.exports.list = async (req, res) => {
-   console.log(req.query.startDate)
+   console.log(req.query.keyword)
   const find = {
     deleted : false
   }
@@ -20,15 +21,24 @@ module.exports.list = async (req, res) => {
   const dateFilter = {};
   if(req.query.startDate) {
     const startDate = moment(req.query.startDate).startOf("date").toDate();
-    dateFilter.$gte = startDate;
+    dateFilter.$gte = startDate; // lớn hơn hoặc bằng
   }
   if(req.query.endDate) {
     const endDate = moment(req.query.endDate).endOf("date").toDate();
-    dateFilter.$lte = endDate;
+    dateFilter.$lte = endDate; // nhỏ hơn hoặc bằng
   }
   if(Object.keys(dateFilter).length > 0) {
     find.createdAt = dateFilter;
   }
+  // lọc theo tìm kiếm
+
+  if(req.query.keyword) {
+     const keyword = slugify(req.query.keyword, {
+       lower: true
+     });
+     const keywordRegex = new RegExp(keyword);
+     find.slug = keywordRegex;
+   }
 
   const categoryList = await Category.find(find).sort({
     position: "desc"
