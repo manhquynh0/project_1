@@ -4,45 +4,71 @@ const slugify = require('slugify');
 const categoryHelper = require("../../helpers/category.helper");
 const AccountAdmin = require("../../models/account-admin.model")
 module.exports.list = async (req, res) => {
-   console.log(req.query.keyword)
+  console.log(req.query.keyword)
   const find = {
-    deleted : false
+    deleted: false
   }
   // loc theo trang thai
-  if(req.query.status){
+  if (req.query.status) {
     find.status = req.query.status
   }
   // loc theo nguoi tao
-  if(req.query.createdBy){
+  if (req.query.createdBy) {
     find.createdBy = req.query.createdBy
   }
 
   // loc theo ngay tao
   const dateFilter = {};
-  if(req.query.startDate) {
+  if (req.query.startDate) {
     const startDate = moment(req.query.startDate).startOf("date").toDate();
     dateFilter.$gte = startDate; // lớn hơn hoặc bằng
   }
-  if(req.query.endDate) {
+  if (req.query.endDate) {
     const endDate = moment(req.query.endDate).endOf("date").toDate();
     dateFilter.$lte = endDate; // nhỏ hơn hoặc bằng
   }
-  if(Object.keys(dateFilter).length > 0) {
+  if (Object.keys(dateFilter).length > 0) {
     find.createdAt = dateFilter;
   }
   // lọc theo tìm kiếm
 
-  if(req.query.keyword) {
-     const keyword = slugify(req.query.keyword, {
-       lower: true
-     });
-     const keywordRegex = new RegExp(keyword);
-     find.slug = keywordRegex;
-   }
+  if (req.query.keyword) {
+    const keyword = slugify(req.query.keyword, {
+      lower: true
+    });
+    const keywordRegex = new RegExp(keyword);
+    find.slug = keywordRegex;
+  }
+  // Phân trang
 
-  const categoryList = await Category.find(find).sort({
-    position: "desc"
-  })
+const limitItems = 5;
+  let page = 1;
+
+  if (req.query.page) {
+    const currentPage = parseInt(req.query.page);
+    if (!isNaN(currentPage) && currentPage > 0) {
+      page = currentPage;
+    }
+  }
+
+  const totalRecord = await Category.countDocuments(find);
+  const totalPage = Math.max(Math.ceil(totalRecord / limitItems), 1); // nếu total page < 1 thì = 1 >  1 thì giữ nguyên
+  if (page > totalPage) {
+    page = totalPage;
+  }
+
+  const skip = (page - 1) * limitItems; // bỏ qua bao nhiêu record
+  const categoryList = await Category.find(find)
+    .sort({ name: "asc" })
+    .limit(limitItems)
+    .skip(skip);
+
+  const pagination = {
+    currentPage: page,
+    totalPage: totalPage,
+    skip: skip,
+    totalRecord: totalRecord
+  };
 
   for (let item of categoryList) {
     if (item.createdBy) {
@@ -71,14 +97,15 @@ module.exports.list = async (req, res) => {
       ""
   }
 
-const accountAdminList = await AccountAdmin
+  const accountAdminList = await AccountAdmin
     .find({})
     .select("id fullName"); // chi lay ra name
 
   res.render("admin/pages/category-list", {
     pageTitle: "Dach sach danh muc",
     categoryList: categoryList,
-    accountAdminList: accountAdminList
+    accountAdminList: accountAdminList,
+    pagination: pagination
   })
 }
 module.exports.create = async (req, res) => {
@@ -185,7 +212,7 @@ module.exports.deletePatch = async (req, res) => {
       deletedBy: req.account.id,
       deletedAt: Date.now()
     })
-    req.flash("success", "Xoa thanh cong")
+    req.flash("success", "Xoa thanh cong")``
     res.json({
       code: "success"
     })
@@ -196,40 +223,44 @@ module.exports.deletePatch = async (req, res) => {
     })
   }
 }
-module.exports.changemultiPatch = async (req,res) => {
-try{
-  const {option,ids} = req.body
-  switch (option){
-  case "active" :
-  case "inactive" : 
-   await Category.updateMany({
-    _id : {$in : ids}
-   },
-  {
-    status : option
-  })
-  req.flash("success","Đổi trạng thái thành công")
-  break;
-  case "delete" :
-    await Category.updateMany({
-    _id : {$in : ids}
-   },
-  {
-    deleted : true,
-    deleteBy : req.account.id,
-    deleteAt : Date.now()
-  })
-  req.flash("success","Xóa thành công")
-  break;
-}
-res.json({
-  code : "success"
-})
-}
-catch(error){
-  res.json({
-    code : "success",
-    message : "ID không hợp lệ"
-  })
-}
+module.exports.changemultiPatch = async (req, res) => {
+  try {
+    const {
+      option,
+      ids
+    } = req.body
+    switch (option) {
+      case "active":
+      case "inactive":
+        await Category.updateMany({
+          _id: {
+            $in: ids
+          }
+        }, {
+          status: option
+        })
+        req.flash("success", "Đổi trạng thái thành công")
+        break;
+      case "delete":
+        await Category.updateMany({
+          _id: {
+            $in: ids
+          }
+        }, {
+          deleted: true,
+          deleteBy: req.account.id,
+          deleteAt: Date.now()
+        })
+        req.flash("success", "Xóa thành công")
+        break;
+    }
+    res.json({
+      code: "success"
+    })
+  } catch (error) {
+    res.json({
+      code: "success",
+      message: "ID không hợp lệ"
+    })
+  }
 }

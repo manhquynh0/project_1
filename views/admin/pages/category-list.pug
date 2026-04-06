@@ -97,9 +97,16 @@ block main
   //- End Section 6
 
   //- Section 7
-  //- .section-7
-  //-   span(class="inner-label") Hiển thị #{pagination.skip + 1} - #{pagination.skip + categoryList.length} của #{pagination.totalRecord}
-  //-   select(class="inner-pagination" pagination)
-  //-     - for (let i = 1; i <= pagination.totalPage; i++)
-  //-       option(value=i) Trang #{i}
+  .section-7
+    .top
+      button.prev-button(type="button") ← Trang trước
+
+      select(class="inner-pagination" pagination data-total-pages= pagination.totalPage)
+        - for (let i = 1; i <= pagination.totalPage; i++)
+          option(value=i selected=(i == pagination.currentPage)) Trang #{i}
+
+      button.next-button(type="button") Trang sau →
+
+    span.inner-label
+      | Hiển thị #{pagination.skip + 1} - #{pagination.skip + categoryList.length} của #{pagination.totalRecord}
   //- End Section 7

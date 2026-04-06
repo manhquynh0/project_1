@@ -1500,8 +1500,13 @@ if(search) {
 
 // Pagination
 const pagination = document.querySelector("[pagination]");
+const prevButton = document.querySelector(".prev-button");
+const nextButton = document.querySelector(".next-button");
 if(pagination) {
   const url = new URL(window.location.href);
+  const valueCurrent = url.searchParams.get("page") || "1";
+  const currentPage = parseInt(valueCurrent) || 1;
+  const totalPages = parseInt(pagination.dataset.totalPages) || 1;
 
   // Lắng nghe thay đổi lựa chọn
   pagination.addEventListener("change", () => {
@@ -1516,9 +1521,26 @@ if(pagination) {
   })
 
   // Hiển thị lựa chọn mặc định
-  const valueCurrent = url.searchParams.get("page");
-  if(valueCurrent) {
-    pagination.value = valueCurrent;
+  pagination.value = currentPage;
+
+  if(prevButton) {
+    prevButton.disabled = currentPage <= 1;
+    prevButton.addEventListener("click", () => {
+      if(currentPage > 1) {
+        url.searchParams.set("page", currentPage - 1);
+        window.location.href = url.href;
+      }
+    })
+  }
+
+  if(nextButton) {
+    nextButton.disabled = currentPage >= totalPages;
+    nextButton.addEventListener("click", () => {
+      if(currentPage < totalPages) {
+        url.searchParams.set("page", currentPage + 1);
+        window.location.href = url.href;
+      }
+    })
   }
 }
 // End Filter Status
