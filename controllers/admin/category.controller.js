@@ -113,8 +113,6 @@ module.exports.create = async (req, res) => {
     deleted: false
   })
   const categoryTree = categoryHelper.buildCategoryTree(categoryList)
-
-  console.log(categoryTree)
   res.render("admin/pages/category-create", {
     pageTitle: "Tao danh muc",
     categoryList: categoryTree

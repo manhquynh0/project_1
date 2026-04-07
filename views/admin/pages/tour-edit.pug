@@ -17,7 +17,7 @@ block main
         label(class="inner-label" for="category") Danh mục
         select(id="category" name="category")
           option(value="") -- Chọn danh mục --
-          //- +options(categoryList, 0, tourDetail.category)
+          +options(categoryList, 0)
       .inner-group
         label(class="inner-label" for="position") Vị trí
         //- input(type="number" id="position" name="position" value=tourDetail.position)

@@ -14,7 +14,7 @@ block main
         label(class="inner-label" for="category") Danh mục
         select(id="category" name="category")
           option(value="") -- Chọn danh mục --
-          //- +options(categoryList, 0)
+          +options(categoryList, 0)
       .inner-group
         label(class="inner-label" for="position") Vị trí
         input(type="number" id="position" name="position")
@@ -70,7 +70,7 @@ block main
       .inner-group
         label(class="inner-label") Những địa điểm có tour
         .inner-checkbox-list
-          //- each item in cityList
+           each item in cityList
             .inner-checkbox-item
               input(type="checkbox" name="locations" value=item.id)
               label #{item.name}
