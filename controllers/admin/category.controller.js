@@ -257,7 +257,7 @@ module.exports.changemultiPatch = async (req, res) => {
     })
   } catch (error) {
     res.json({
-      code: "success",
+      code: "error",
       message: "ID không hợp lệ"
     })
   }

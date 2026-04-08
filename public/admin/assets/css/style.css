@@ -893,6 +893,7 @@ a {
   font-weight: 700;
   font-size: 14px;
   border: 0;
+  width : 140px;
   height: 100%;
   padding: 0 28px;
   border-radius: 14px;
@@ -900,6 +901,7 @@ a {
   min-height: 42px;
   display: inline-flex;
   align-items: center;
+  text-align :center
 }
 
 .section-5 .inner-button-trash button, .section-5 .inner-button-trash a {
@@ -908,6 +910,7 @@ a {
   font-weight: 700;
   font-size: 14px;
   border: 0;
+  width : 140px;
   height: 100%;
   padding: 0 28px;
   border-radius: 14px;
@@ -915,6 +918,7 @@ a {
   min-height: 42px;
   display: inline-flex;
   align-items: center;
+  text-align :center
 }
 
 @media (max-width: 991.98px) {

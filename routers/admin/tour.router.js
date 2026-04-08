@@ -9,4 +9,5 @@ router.get("/create",tourController.create)
 router.get("/edit",tourController.edit)
 router.get("/trash",tourController.edit)
 router.post("/create",upload.single('avatar'),tourValidate.createPost,tourController.createPost)
+router.patch("/change-multi",tourController.changemultiPatch)
 module.exports = router

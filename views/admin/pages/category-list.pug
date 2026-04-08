@@ -1,5 +1,5 @@
 extends ../layouts/default.pug
-
+include ../mixins/pagination.pug
 block main
   h1.box-title Quản lý danh mục
 
@@ -98,15 +98,5 @@ block main
 
   //- Section 7
   .section-7
-    .top
-      button.prev-button(type="button") ← Trang trước
-
-      select(class="inner-pagination" pagination data-total-pages= pagination.totalPage)
-        - for (let i = 1; i <= pagination.totalPage; i++)
-          option(value=i selected=(i == pagination.currentPage)) Trang #{i}
-
-      button.next-button(type="button") Trang sau →
-
-    span.inner-label
-      | Hiển thị #{pagination.skip + 1} - #{pagination.skip + categoryList.length} của #{pagination.totalRecord}
+    +pagination(pagination, categoryList.length)
   //- End Section 7
