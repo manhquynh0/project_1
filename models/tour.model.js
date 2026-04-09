@@ -17,10 +17,11 @@ const schema = new mongoose.Schema({
     stockBaby: Number,
     locations: Array,
     time: String,
+    vehicle: String,
     departureDate: Date,
     information: String,
     schedules: Array,
-    vehical: String,
+    images: Array,
     updatedBy: String,
     createdBy: String,
     slug: {
@@ -33,6 +34,7 @@ const schema = new mongoose.Schema({
         default: false
     },
     deletedBy: String,
+    deletedAt: Date,
     description: String,
 }, {
     timestamps: true // TU DONG sinh ra truong creatAt va updateAt

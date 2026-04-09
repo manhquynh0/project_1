@@ -430,8 +430,9 @@ if (tourCreateForm) {
       formData.append("schedules", JSON.stringify(schedules));
 
       // images
-      if (filePondMulti.images.getFiles().length > 0) {
-        filePondMulti.images.getFiles().forEach(item => {
+      const imageFiles = (filePondMulti.images?.getFiles?.() || []).filter(item => item.file);
+      if (imageFiles.length > 0) {
+        imageFiles.forEach(item => {
           formData.append("images", item.file);
         })
       }
