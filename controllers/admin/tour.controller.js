@@ -88,7 +88,7 @@ module.exports.list = async (req, res) => {
   const skip = (page - 1) * limitItems; // bỏ qua bao nhiêu record
   const tourList = await Tour.find(find)
     .sort({
-      name: "asc"
+      createdAt: "desc"
     })
     .limit(limitItems)
     .skip(skip);
@@ -285,8 +285,16 @@ module.exports.editPatch = async (req, res) => {
 
 }
 module.exports.trash = async (req, res) => {
-  const find = {
+  // loc theo tim kiem
+    const find = {
     deleted: true
+  }
+    if (req.query.keyword) {
+    const keyword = slugify(req.query.keyword, {
+      lower: true
+    });
+    const keywordRegex = new RegExp(keyword);
+    find.slug = keywordRegex;
   }
   const limitItems = 5;
   let page = 1;
@@ -439,6 +447,48 @@ module.exports.changemultiTrash = async (req, res) => {
     res.json({
       code: "error",
       message: "ID không hợp lệ"
+    })
+  }
+}
+module.exports.undoTrash = async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    await Tour.updateOne({
+      _id: id
+    }, {
+      deleted: false
+    })
+
+    req.flash("success", "Khôi phục tour thành công!");
+
+    res.json({
+      code: "success"
+    })
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: "Id không hợp lệ!"
+    })
+  }
+}
+module.exports.deleteTrash = async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    await Tour.deleteOne({
+      _id: id
+    })
+
+    req.flash("success", "Xóa tour thành công!");
+
+    res.json({
+      code: "success"
+    })
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: "Id không hợp lệ!"
     })
   }
 }

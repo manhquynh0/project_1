@@ -19,7 +19,7 @@ block main
             button Áp dụng
         .inner-search
           <i class="fa-solid fa-magnifying-glass"></i>
-          input(type="text" placeholder="Tìm kiếm")
+          input(type="text" placeholder="Tìm kiếm" search)
     //- End Section 5
 
     //- Section 6
@@ -84,4 +84,7 @@ block main
     //- Section 7
     .section-7
       +pagination(pagination, tourList.length)
+      .inner-back
+          a(href=`/${pathAdmin}/tour/list`) Quay lại danh sách
     //- End Section 7
+    

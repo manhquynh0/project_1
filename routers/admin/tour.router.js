@@ -14,6 +14,8 @@ router.post("/create",upload.fields([
   ]),tourValidate.createPost,tourController.createPost)
 router.patch("/change-multi",tourController.changemultiPatch)
 router.patch("/trash/change-multi",tourController.changemultiTrash)
+router.patch("/undo/:id",tourController.undoTrash)
+router.patch("/delete-destroy/:id",tourController.deleteTrash)
 router.patch("/edit/:id",upload.fields([
     { name: 'avatar', maxCount: 1 },
     { name: 'images', maxCount: 10 }
