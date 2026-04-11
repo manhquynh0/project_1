@@ -7,48 +7,45 @@ block main
     
     form.inner-form#login-form
       .inner-group
-        label(
-          class="inner-label"
-          for="email"
-        ) Email
-        input(
+        label.inner-label(for="email") Email
+        input.inner-control(
           type="email"
           name="email"
           id="email"
           placeholder="Ví dụ: levana@gmail.com"
-          class="inner-control"
         )
+
       .inner-group
-        label(
-          class="inner-label"
-          for="password"
-        ) Mật khẩu
-        input(
+        label.inner-label(for="password") Mật khẩu
+        input.inner-control(
           type="password"
           name="password"
           id="password"
-          class="inner-control"
         )
+
       .inner-meta
         .inner-confirm
-          input(
+          input.inner-check(
             type="checkbox"
             name="rememberPassword"
             id="remember-password"
-            class="inner-check"
           )
-          label(
-            class="inner-label"
-            for="remember-password"
-          ) Nhớ mật khẩu
-        a(
-          href=`/${pathAdmin}/account/forgot-password` 
-          class="inner-forgot-password"
+          label.inner-label(for="remember-password") Nhớ mật khẩu
+
+        a.inner-forgot-password(
+          href=`/${pathAdmin}/account/forgot-password`
         ) Quên mật khẩu?
-      button(class="inner-button") Đăng Nhập
+
+      button.inner-button(type="submit") Đăng Nhập
+
+    // ====== THÊM GOOGLE LOGIN ======
     
-    .inner-more
-      span Bạn chưa có tài khoản?
-      a(
-        href=`/${pathAdmin}/account/register`
-      ) Tạo tài khoản
+
+    .google-login
+      #g_id_onload(
+        data-client_id="169562147948-00l8ffakucol8f0kre6mhl7h093ktt36.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse"
+      )
+      .g_id_signin
+  // ===== SCRIPT GOOGLE =====
+  script(src="https://accounts.google.com/gsi/client" async defer)

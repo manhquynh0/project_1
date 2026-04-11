@@ -4,11 +4,72 @@ const jwt = require("jsonwebtoken")
 const { generateOTP } = require("../../helpers/generate.helper")
 const ForgotPassword = require("../../models/forgot-password.model")
 const mailHelper = require("../../helpers/mail.helper")
+
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 module.exports.login = async(req,res) => {
     res.render("admin/pages/login.pug",{
     pageTitle : "Dang nhap"})
 }
+
+module.exports.loginGoogle = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    // verify token từ Google
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    // tìm user theo email
+    let user = await AccountAdmin.findOne({
+      email: payload.email
+    });
+
+    // nếu chưa có thì tạo mới
+    if (!user) {
+      user = await AccountAdmin.create({
+        fullName: payload.name,
+        email: payload.email,
+        password: "", // Google login không cần password
+        status: "active"
+      });
+    }
+
+    // tạo JWT giống login thường
+    const jwtToken = jwt.sign(
+      {
+        id: user.id,
+        email: user.email
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    // lưu cookie
+    res.cookie("token", jwtToken, {
+      maxAge: 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      sameSite: "strict"
+    });
+
+    return res.json({
+      code: "success",
+      message: "Login Google thành công"
+    });
+
+  } catch (err) {
+    return res.json({
+      code: "error",
+      message: "Google login failed"
+    });
+  }
+};
 module.exports.loginPost = async(req,res) => {
+    
    const { email,password,rememberPassword} = req.body
     const exitAccount = await AccountAdmin.findOne({
         email : email

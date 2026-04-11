@@ -341,3 +341,36 @@ if (resetPasswordForm) {
     });
 }
 // End Reset Password Form
+// ===== Google Login =====
+const googleLogin = document.querySelector(".google-login");
+
+if (googleLogin) {
+  window.handleCredentialResponse = (response) => {
+    const dataFinal = {
+      token: response.credential
+    };
+
+    fetch(`/${pathAdmin}/account/login-google`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify(dataFinal)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.code == "error") {
+        alert(data.message || "Đăng nhập Google thất bại");
+      }
+
+      if (data.code == "success") {
+        window.location.href = `/${pathAdmin}/dashboard`;
+      }
+    })
+    .catch(err => {
+      console.error("Lỗi Google Login:", err);
+    });
+  };
+
+}

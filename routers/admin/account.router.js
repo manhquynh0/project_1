@@ -22,6 +22,5 @@ router.get('/register-initial',accountController.registerInitial)
 
 router.post('/logout',accountController.logoutPost)
 
-
-
+router.post("/login-google", accountController.loginGoogle);
 module.exports = router;
