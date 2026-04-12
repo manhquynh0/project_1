@@ -32,6 +32,7 @@ module.exports.verifyTokens = async (req, res, next) => {
         } else {
             exitAccount.roleName = "Không định dạng";
         }
+
         req.account = exitAccount; // cac file controller co the dung
         res.locals.account = exitAccount // cac file pug co the dung
         next()
