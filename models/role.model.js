@@ -2,14 +2,9 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
     {
-        fullName: String,
-        email: String,
-        phone: String,
-        role: String,
-        positionCompany: String,
-        status: String,
-        password: String,
-        avatar: String,
+        name: String,
+        description: String,
+        permissions: Array,
         createdBy: String,
         updatedBy: String,
         deleted: {
@@ -24,6 +19,6 @@ const schema = new mongoose.Schema(
     }
 );
 
-const AccountAdmin = mongoose.model('AccountAdmin', schema, "accounts-admin");
+const Role = mongoose.model('Role', schema, "roles");
 
-module.exports = AccountAdmin;
+module.exports = Role;

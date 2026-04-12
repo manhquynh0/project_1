@@ -7,17 +7,17 @@ block main
     form#setting-role-edit-form
       .inner-group(style="display: none;")
         label(class="inner-label" for="id") Id
-      //-   input(type="text" id="id" name="id" value=roleDetail.id)
-      //- .inner-group
+        input(type="text" id="id" name="id" value=roleDetail.id)
+      .inner-group
         label(class="inner-label" for="name") Tên nhóm quyền
         input(type="text" id="name" name="name" value=roleDetail.name)
       .inner-group
         label(class="inner-label" for="description") Mô tả ngắn
-        //- input(type="text" id="description" name="description" value=roleDetail.description)
+        input(type="text" id="description" name="description" value=roleDetail.description)
       .inner-group
         label(class="inner-label") Phân quyền
         .inner-checkbox-list
-          //- each item in permissionList
+           each item in permissionList
             .inner-checkbox-item
               input(
                 type="checkbox" 

@@ -41,7 +41,7 @@ module.exports.list = async (req, res) => {
   }
   // Phân trang
 
-const limitItems = 5;
+  const limitItems = 5;
   let page = 1;
 
   if (req.query.page) {

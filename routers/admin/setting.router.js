@@ -1,20 +1,24 @@
 const router = require("express").Router()
-const multer  = require('multer');
+const multer = require('multer');
 const cloudinaryHelper = require("../../helpers/cloudinary.helper");
 const upload = multer({ storage: cloudinaryHelper.storage });
 const settingController = require("../../controllers/admin/setting.controller")
-router.get("/list",settingController.list)
-router.get("/website-info",settingController.websiteInfo )
+router.get("/list", settingController.list)
+router.get("/website-info", settingController.websiteInfo)
 router.patch("/website-info", upload.fields(
-    [
-      { name: 'logo', maxCount: 1 },
-      { name: 'favicon', maxCount: 1 }
-    ]
-  ),settingController.websiteInfoPatch)
-router.get("/account-admin/list",settingController.accountAdminList)
-router.get("/account-admin/create",settingController.accountAdminCreate)
-router.get("/account-admin/edit",settingController.accountAdminEdit)
-router.get("/role/list",settingController.rolelist)
-router.get("/role/create",settingController.rolecreate)
-router.get("/role/edit",settingController.roleedit)
+  [
+    { name: 'logo', maxCount: 1 },
+    { name: 'favicon', maxCount: 1 }
+  ]
+), settingController.websiteInfoPatch)
+router.get("/account-admin/list", settingController.accountAdminList)
+router.get("/account-admin/create", settingController.accountAdminCreate)
+router.get("/account-admin/edit", settingController.accountAdminEdit)
+router.get("/role/list", settingController.rolelist)
+router.get("/role/create", settingController.rolecreate)
+router.post("/role/create", settingController.rolecreatePost)
+router.get("/role/edit/:id", settingController.roleedit)
+router.patch("/role/edit/:id", settingController.roleeditPatch)
+router.patch("/role/delete/:id", settingController.roleDelete)
+router.patch("/role/change-multi", settingController.roleChangeMulti)
 module.exports = router

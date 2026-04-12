@@ -14,7 +14,7 @@ block main
       .inner-group
         label(class="inner-label") Phân quyền
         .inner-checkbox-list
-          //- each item in permissionList
+          each item in permissionList
             .inner-checkbox-item
               input(type="checkbox" name="permissions" value=item.value)
               label #{item.label}
