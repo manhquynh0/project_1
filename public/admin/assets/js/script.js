@@ -91,7 +91,7 @@ if (listFilepondImage.length > 0) {
       if (imageDefault) {
         files = [{
           source: imageDefault, // Đường dẫn ảnh
-        }, ]
+        },]
       }
     }
 
@@ -169,12 +169,12 @@ if (revenueChart) {
     };
 
     fetch(`/${pathAdmin}/dashboard/revenue-chart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataFinal),
-      })
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataFinal),
+    })
       .then(res => res.json())
       .then(data => {
         if (data.code == "error") {
@@ -190,17 +190,17 @@ if (revenueChart) {
             data: {
               labels: arrayDay,
               datasets: [{
-                  label: `Tháng ${currentMonth}/${currentYear}`, // Nhãn của dataset
-                  data: data.dataMonthCurrent, // Dữ liệu
-                  borderColor: '#4379EE', // Màu viền
-                  borderWidth: 1.5, // Độ dày của đường
-                },
-                {
-                  label: `Tháng ${previousMonth}/${previousYear}`, // Nhãn của dataset
-                  data: data.dataMonthPrevious, // Dữ liệu
-                  borderColor: '#EF3826', // Màu viền
-                  borderWidth: 1.5, // Độ dày của đường
-                }
+                label: `Tháng ${currentMonth}/${currentYear}`, // Nhãn của dataset
+                data: data.dataMonthCurrent, // Dữ liệu
+                borderColor: '#4379EE', // Màu viền
+                borderWidth: 1.5, // Độ dày của đường
+              },
+              {
+                label: `Tháng ${previousMonth}/${previousYear}`, // Nhãn của dataset
+                data: data.dataMonthPrevious, // Dữ liệu
+                borderColor: '#EF3826', // Màu viền
+                borderWidth: 1.5, // Độ dày của đường
+              }
               ]
             },
             options: {
@@ -274,9 +274,9 @@ if (categoryCreateForm) {
       formData.append("description", description);
 
       fetch(`/${pathAdmin}/category/create`, {
-          method: "POST",
-          body: formData
-        })
+        method: "POST",
+        body: formData
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -329,9 +329,9 @@ if (categoryEditForm) {
       formData.append("description", description);
 
       fetch(`/${pathAdmin}/category/edit/${id}`, {
-          method: "PATCH",
-          body: formData
-        })
+        method: "PATCH",
+        body: formData
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -439,9 +439,9 @@ if (tourCreateForm) {
       // End images
 
       fetch(`/${pathAdmin}/tour/create`, {
-          method: "POST",
-          body: formData
-        })
+        method: "POST",
+        body: formData
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -554,9 +554,9 @@ if (tourEditForm) {
       // End images
 
       fetch(`/${pathAdmin}/tour/edit/${id}`, {
-          method: "PATCH",
-          body: formData
-        })
+        method: "PATCH",
+        body: formData
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -578,29 +578,29 @@ if (orderEditForm) {
 
   validation
     .addField('#fullName', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập họ tên!'
-      },
-      {
-        rule: 'minLength',
-        value: 5,
-        errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
-      },
-      {
-        rule: 'maxLength',
-        value: 50,
-        errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập họ tên!'
+    },
+    {
+      rule: 'minLength',
+      value: 5,
+      errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
+    },
+    {
+      rule: 'maxLength',
+      value: 50,
+      errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
+    },
     ])
     .addField('#phone', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập số điện thoại!'
-      },
-      {
-        rule: 'customRegexp',
-        value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-        errorMessage: 'Số điện thoại không đúng định dạng!'
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập số điện thoại!'
+    },
+    {
+      rule: 'customRegexp',
+      value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+      errorMessage: 'Số điện thoại không đúng định dạng!'
+    },
     ])
     .onSuccess((event) => {
       const id = event.target.id.value;
@@ -621,12 +621,12 @@ if (orderEditForm) {
       };
 
       fetch(`/${pathAdmin}/order/edit/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataFinal),
-        })
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataFinal),
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -650,61 +650,61 @@ if (settingWebsiteInfoForm) {
     .addField('#websiteName', [{
       rule: 'required',
       errorMessage: 'Vui lòng nhập tên website!'
-    }, ])
+    },])
     .addField('#email', [{
       rule: 'email',
       errorMessage: 'Email không đúng định dạng!',
-    }, ])
+    },])
     .onSuccess((event) => {
-  const websiteName = event.target.websiteName.value;
-  const phone = event.target.phone.value;
-  const email = event.target.email.value;
-  const address = event.target.address.value;
+      const websiteName = event.target.websiteName.value;
+      const phone = event.target.phone.value;
+      const email = event.target.email.value;
+      const address = event.target.address.value;
 
-  const logos = filePond.logo.getFiles();
-  let logo = null;
-  if (logos.length > 0) {
-    logo = logos[0].file;
-    const elementImageDefault = document.querySelector("#logo")?.closest("[image-default]"); 
-    const imageDefault = elementImageDefault?.getAttribute("image-default") ?? "";
-    if (imageDefault.includes(logo.name)) {
-      logo = null;
-    }
-  }
-
-  const favicons = filePond.favicon.getFiles();
-  let favicon = null;
-  if (favicons.length > 0) {
-    favicon = favicons[0].file;
-    const elementImageDefault = document.querySelector("#favicon")?.closest("[image-default]"); 
-    const imageDefault = elementImageDefault?.getAttribute("image-default") ?? "";
-    if (imageDefault.includes(favicon.name)) {
-      favicon = null;
-    }
-  }
-
-  const formData = new FormData();
-  formData.append("websiteName", websiteName);
-  formData.append("phone", phone);
-  formData.append("email", email);
-  formData.append("address", address);
-  formData.append("logo", logo);
-  formData.append("favicon", favicon);
-
-  fetch(`/${pathAdmin}/setting/website-info`, {
-      method: "PATCH",
-      body: formData,
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.code == "error") {
-        alert(data.message);
+      const logos = filePond.logo.getFiles();
+      let logo = null;
+      if (logos.length > 0) {
+        logo = logos[0].file;
+        const elementImageDefault = document.querySelector("#logo")?.closest("[image-default]");
+        const imageDefault = elementImageDefault?.getAttribute("image-default") ?? "";
+        if (imageDefault.includes(logo.name)) {
+          logo = null;
+        }
       }
-      if (data.code == "success") {
-        window.location.reload();
+
+      const favicons = filePond.favicon.getFiles();
+      let favicon = null;
+      if (favicons.length > 0) {
+        favicon = favicons[0].file;
+        const elementImageDefault = document.querySelector("#favicon")?.closest("[image-default]");
+        const imageDefault = elementImageDefault?.getAttribute("image-default") ?? "";
+        if (imageDefault.includes(favicon.name)) {
+          favicon = null;
+        }
       }
+
+      const formData = new FormData();
+      formData.append("websiteName", websiteName);
+      formData.append("phone", phone);
+      formData.append("email", email);
+      formData.append("address", address);
+      formData.append("logo", logo);
+      formData.append("favicon", favicon);
+
+      fetch(`/${pathAdmin}/setting/website-info`, {
+        method: "PATCH",
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.code == "error") {
+            alert(data.message);
+          }
+          if (data.code == "success") {
+            window.location.reload();
+          }
+        });
     });
-});
 }
 // End Setting Website Info Form
 
@@ -715,67 +715,67 @@ if (settingAccountAdminCreateForm) {
 
   validation
     .addField('#fullName', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập họ tên!'
-      },
-      {
-        rule: 'minLength',
-        value: 5,
-        errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
-      },
-      {
-        rule: 'maxLength',
-        value: 50,
-        errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập họ tên!'
+    },
+    {
+      rule: 'minLength',
+      value: 5,
+      errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
+    },
+    {
+      rule: 'maxLength',
+      value: 50,
+      errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
+    },
     ])
     .addField('#email', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập email!'
-      },
-      {
-        rule: 'email',
-        errorMessage: 'Email không đúng định dạng!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập email!'
+    },
+    {
+      rule: 'email',
+      errorMessage: 'Email không đúng định dạng!',
+    },
     ])
     .addField('#phone', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập số điện thoại!'
-      },
-      {
-        rule: 'customRegexp',
-        value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-        errorMessage: 'Số điện thoại không đúng định dạng!'
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập số điện thoại!'
+    },
+    {
+      rule: 'customRegexp',
+      value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+      errorMessage: 'Số điện thoại không đúng định dạng!'
+    },
     ])
     .addField('#positionCompany', [{
       rule: 'required',
       errorMessage: 'Vui lòng nhập chức vụ!'
-    }, ])
+    },])
     .addField('#password', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập mật khẩu!',
-      },
-      {
-        validator: (value) => value.length >= 8,
-        errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
-      },
-      {
-        validator: (value) => /[A-Z]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
-      },
-      {
-        validator: (value) => /[a-z]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
-      },
-      {
-        validator: (value) => /\d/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
-      },
-      {
-        validator: (value) => /[@$!%*?&]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập mật khẩu!',
+    },
+    {
+      validator: (value) => value.length >= 8,
+      errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
+    },
+    {
+      validator: (value) => /[A-Z]/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
+    },
+    {
+      validator: (value) => /[a-z]/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
+    },
+    {
+      validator: (value) => /\d/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
+    },
+    {
+      validator: (value) => /[@$!%*?&]/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
+    },
     ])
     .onSuccess((event) => {
       const fullName = event.target.fullName.value;
@@ -803,9 +803,9 @@ if (settingAccountAdminCreateForm) {
       formData.append("avatar", avatar);
 
       fetch(`/${pathAdmin}/setting/account-admin/create`, {
-          method: "POST",
-          body: formData,
-        })
+        method: "POST",
+        body: formData,
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -827,58 +827,58 @@ if (settingAccountAdminEditForm) {
 
   validation
     .addField('#fullName', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập họ tên!'
-      },
-      {
-        rule: 'minLength',
-        value: 5,
-        errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
-      },
-      {
-        rule: 'maxLength',
-        value: 50,
-        errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập họ tên!'
+    },
+    {
+      rule: 'minLength',
+      value: 5,
+      errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
+    },
+    {
+      rule: 'maxLength',
+      value: 50,
+      errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
+    },
     ])
     .addField('#email', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập email!'
-      },
-      {
-        rule: 'email',
-        errorMessage: 'Email không đúng định dạng!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập email!'
+    },
+    {
+      rule: 'email',
+      errorMessage: 'Email không đúng định dạng!',
+    },
     ])
     .addField('#phone', [{
       rule: 'customRegexp',
       value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
       errorMessage: 'Số điện thoại không đúng định dạng!'
-    }, ])
+    },])
     .addField('#positionCompany', [{
       rule: 'required',
       errorMessage: 'Vui lòng nhập chức vụ!'
-    }, ])
+    },])
     .addField('#password', [{
-        validator: (value) => value ? value.length >= 8 : true,
-        errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
-      },
-      {
-        validator: (value) => value ? /[A-Z]/.test(value) : true,
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
-      },
-      {
-        validator: (value) => value ? /[a-z]/.test(value) : true,
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
-      },
-      {
-        validator: (value) => value ? /\d/.test(value) : true,
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
-      },
-      {
-        validator: (value) => value ? /[@$!%*?&]/.test(value) : true,
-        errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
-      },
+      validator: (value) => value ? value.length >= 8 : true,
+      errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
+    },
+    {
+      validator: (value) => value ? /[A-Z]/.test(value) : true,
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
+    },
+    {
+      validator: (value) => value ? /[a-z]/.test(value) : true,
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
+    },
+    {
+      validator: (value) => value ? /\d/.test(value) : true,
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
+    },
+    {
+      validator: (value) => value ? /[@$!%*?&]/.test(value) : true,
+      errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
+    },
     ])
     .onSuccess((event) => {
       const id = event.target.id.value;
@@ -914,9 +914,9 @@ if (settingAccountAdminEditForm) {
       formData.append("avatar", avatar);
 
       fetch(`/${pathAdmin}/setting/account-admin/edit/${id}`, {
-          method: "PATCH",
-          body: formData,
-        })
+        method: "PATCH",
+        body: formData,
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -940,7 +940,7 @@ if (settingRoleCreateForm) {
     .addField('#name', [{
       rule: 'required',
       errorMessage: 'Vui lòng nhập tên nhóm quyền!'
-    }, ])
+    },])
     .onSuccess((event) => {
       const name = event.target.name.value;
       const description = event.target.description.value;
@@ -960,12 +960,12 @@ if (settingRoleCreateForm) {
       };
 
       fetch(`/${pathAdmin}/setting/role/create`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataFinal),
-        })
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataFinal),
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -989,7 +989,7 @@ if (settingRoleEditForm) {
     .addField('#name', [{
       rule: 'required',
       errorMessage: 'Vui lòng nhập tên nhóm quyền!'
-    }, ])
+    },])
     .onSuccess((event) => {
       const id = event.target.id.value;
       const name = event.target.name.value;
@@ -1010,12 +1010,12 @@ if (settingRoleEditForm) {
       };
 
       fetch(`/${pathAdmin}/setting/role/edit/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataFinal),
-        })
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataFinal),
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -1037,38 +1037,38 @@ if (profileEditForm) {
 
   validation
     .addField('#fullName', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập họ tên!'
-      },
-      {
-        rule: 'minLength',
-        value: 5,
-        errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
-      },
-      {
-        rule: 'maxLength',
-        value: 50,
-        errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập họ tên!'
+    },
+    {
+      rule: 'minLength',
+      value: 5,
+      errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
+    },
+    {
+      rule: 'maxLength',
+      value: 50,
+      errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
+    },
     ])
     .addField('#email', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập email!'
-      },
-      {
-        rule: 'email',
-        errorMessage: 'Email không đúng định dạng!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập email!'
+    },
+    {
+      rule: 'email',
+      errorMessage: 'Email không đúng định dạng!',
+    },
     ])
     .addField('#phone', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập số điện thoại!'
-      },
-      {
-        rule: 'customRegexp',
-        value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-        errorMessage: 'Số điện thoại không đúng định dạng!'
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập số điện thoại!'
+    },
+    {
+      rule: 'customRegexp',
+      value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+      errorMessage: 'Số điện thoại không đúng định dạng!'
+    },
     ])
     .onSuccess((event) => {
       const fullName = event.target.fullName.value;
@@ -1093,9 +1093,9 @@ if (profileEditForm) {
       formData.append("avatar", avatar);
 
       fetch(`/${pathAdmin}/profile/edit`, {
-          method: "PATCH",
-          body: formData,
-        })
+        method: "PATCH",
+        body: formData,
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -1117,41 +1117,41 @@ if (profileChangePasswordForm) {
 
   validation
     .addField('#password', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập mật khẩu!',
-      },
-      {
-        validator: (value) => value.length >= 8,
-        errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
-      },
-      {
-        validator: (value) => /[A-Z]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
-      },
-      {
-        validator: (value) => /[a-z]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
-      },
-      {
-        validator: (value) => /\d/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
-      },
-      {
-        validator: (value) => /[@$!%*?&]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
-      },
+      rule: 'required',
+      errorMessage: 'Vui lòng nhập mật khẩu!',
+    },
+    {
+      validator: (value) => value.length >= 8,
+      errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
+    },
+    {
+      validator: (value) => /[A-Z]/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
+    },
+    {
+      validator: (value) => /[a-z]/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
+    },
+    {
+      validator: (value) => /\d/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
+    },
+    {
+      validator: (value) => /[@$!%*?&]/.test(value),
+      errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
+    },
     ])
     .addField('#confirmPassword', [{
-        rule: 'required',
-        errorMessage: 'Vui lòng xác nhận mật khẩu!',
+      rule: 'required',
+      errorMessage: 'Vui lòng xác nhận mật khẩu!',
+    },
+    {
+      validator: (value, fields) => {
+        const password = fields['#password'].elem.value;
+        return value == password;
       },
-      {
-        validator: (value, fields) => {
-          const password = fields['#password'].elem.value;
-          return value == password;
-        },
-        errorMessage: 'Mật khẩu xác nhận không khớp!',
-      }
+      errorMessage: 'Mật khẩu xác nhận không khớp!',
+    }
     ])
     .onSuccess((event) => {
       const password = event.target.password.value;
@@ -1161,12 +1161,12 @@ if (profileChangePasswordForm) {
       }
 
       fetch(`/${pathAdmin}/profile/change-password`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataFinal),
-        })
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataFinal),
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -1203,8 +1203,8 @@ const buttonLogout = document.querySelector(".sider .inner-logout");
 if (buttonLogout) {
   buttonLogout.addEventListener("click", () => {
     fetch(`/${pathAdmin}/account/logout`, {
-        method: "POST"
-      })
+      method: "POST"
+    })
       .then(res => res.json())
       .then(data => {
         if (data.code == "success") {
@@ -1234,8 +1234,8 @@ if (listButtonDelete.length > 0) {
       const dataApi = button.getAttribute("data-api");
 
       fetch(dataApi, {
-          method: "PATCH"
-        })
+        method: "PATCH"
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -1305,22 +1305,22 @@ const filterPrice = document.querySelector("[filter-price]")
 if (filterPrice) {
   const url = new URL(window.location.href)
   filterPrice.addEventListener("change", () => {
-      const value = filterPrice.value
-      if (value) {
-        const [min, max] = value.split("-")
-        url.searchParams.set("priceMin", min)
-        url.searchParams.set("priceMax", max)
-      } else {
-        url.searchParams.delete("priceMin");
-        url.searchParams.delete("priceMax");
-      }
-          window.location.href = url.href;
-    })
+    const value = filterPrice.value
+    if (value) {
+      const [min, max] = value.split("-")
+      url.searchParams.set("priceMin", min)
+      url.searchParams.set("priceMax", max)
+    } else {
+      url.searchParams.delete("priceMin");
+      url.searchParams.delete("priceMax");
+    }
+    window.location.href = url.href;
+  })
 
   // set lại value khi reload
- const valueCurrentMin = url.searchParams.get("priceMin");
- const valueCurrentMax = url.searchParams.get("priceMax");
-  if (valueCurrentMin &&valueCurrentMax) {
+  const valueCurrentMin = url.searchParams.get("priceMin");
+  const valueCurrentMax = url.searchParams.get("priceMax");
+  if (valueCurrentMin && valueCurrentMax) {
     filterPrice.value = `${priceMin}-${priceMax}`;
   }
 
@@ -1445,12 +1445,12 @@ if (changeMulti) {
       };
 
       fetch(dataApi, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(dataFinal)
-        })
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataFinal)
+      })
         .then(res => res.json())
         .then(data => {
           if (data.code == "error") {
@@ -1494,7 +1494,30 @@ if (search) {
   }
 }
 // End Search
+// Filter-Role
+const filterRole = document.querySelector("[filter-role]");
+if (filterRole) {
+  const url = new URL(window.location.href);
 
+  // Lắng nghe thay đổi lựa chọn
+  filterRole.addEventListener("change", () => {
+    const value = filterRole.value;
+    if (value) {
+      url.searchParams.set("role", value);
+    } else {
+      url.searchParams.delete("role");
+    }
+
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc định
+  const valueCurrent = url.searchParams.get("role");
+  if (valueCurrent) {
+    filterRole.value = valueCurrent;
+  }
+}
+// End Filter-Role
 // Pagination
 const pagination = document.querySelector("[pagination]");
 const prevButton = document.querySelector(".prev-button");

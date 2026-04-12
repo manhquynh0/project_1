@@ -17,7 +17,7 @@ block main
       .inner-group
         label(class="inner-label" for="role") Nhóm quyền
         select(id="role" name="role")
-          //- each item in roleList
+          each item in roleList
             option(value=item.id) #{item.name}
       .inner-group
         label(class="inner-label" for="positionCompany") Chức vụ
