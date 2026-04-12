@@ -35,7 +35,7 @@ app.use(cookieParser("tuyetcute"))
 
 //Nhúng flash
 app.use(session({
-  secret: "tuyetcute",   
+  secret: "huhu",   
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }

@@ -656,55 +656,55 @@ if (settingWebsiteInfoForm) {
       errorMessage: 'Email không đúng định dạng!',
     }, ])
     .onSuccess((event) => {
-      const websiteName = event.target.websiteName.value;
-      const phone = event.target.phone.value;
-      const email = event.target.email.value;
-      const address = event.target.address.value;
-      const logos = filePond.logo.getFiles();
-      let logo = null;
-      if (logos.length > 0) {
-        logo = logos[0].file;
-        const elementImageDefault = event.target.logo.closest("[image-default]");
-        const imageDefault = elementImageDefault.getAttribute("image-default");
-        if (imageDefault.includes(logo.name)) {
-          logo = null;
-        }
+  const websiteName = event.target.websiteName.value;
+  const phone = event.target.phone.value;
+  const email = event.target.email.value;
+  const address = event.target.address.value;
+
+  const logos = filePond.logo.getFiles();
+  let logo = null;
+  if (logos.length > 0) {
+    logo = logos[0].file;
+    const elementImageDefault = document.querySelector("#logo")?.closest("[image-default]"); 
+    const imageDefault = elementImageDefault?.getAttribute("image-default") ?? "";
+    if (imageDefault.includes(logo.name)) {
+      logo = null;
+    }
+  }
+
+  const favicons = filePond.favicon.getFiles();
+  let favicon = null;
+  if (favicons.length > 0) {
+    favicon = favicons[0].file;
+    const elementImageDefault = document.querySelector("#favicon")?.closest("[image-default]"); 
+    const imageDefault = elementImageDefault?.getAttribute("image-default") ?? "";
+    if (imageDefault.includes(favicon.name)) {
+      favicon = null;
+    }
+  }
+
+  const formData = new FormData();
+  formData.append("websiteName", websiteName);
+  formData.append("phone", phone);
+  formData.append("email", email);
+  formData.append("address", address);
+  formData.append("logo", logo);
+  formData.append("favicon", favicon);
+
+  fetch(`/${pathAdmin}/setting/website-info`, {
+      method: "PATCH",
+      body: formData,
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.code == "error") {
+        alert(data.message);
       }
-      const favicons = filePond.favicon.getFiles();
-      let favicon = null;
-      if (favicons.length > 0) {
-        favicon = favicons[0].file;
-        const elementImageDefault = event.target.favicon.closest("[image-default]");
-        const imageDefault = elementImageDefault.getAttribute("image-default");
-        if (imageDefault.includes(favicon.name)) {
-          favicon = null;
-        }
+      if (data.code == "success") {
+        window.location.reload();
       }
-
-      // Tạo FormData
-      const formData = new FormData();
-      formData.append("websiteName", websiteName);
-      formData.append("phone", phone);
-      formData.append("email", email);
-      formData.append("address", address);
-      formData.append("logo", logo);
-      formData.append("favicon", favicon);
-
-      fetch(`/${pathAdmin}/setting/website-info`, {
-          method: "PATCH",
-          body: formData,
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.code == "error") {
-            alert(data.message);
-          }
-
-          if (data.code == "success") {
-            window.location.reload();
-          }
-        })
     });
+});
 }
 // End Setting Website Info Form
 
