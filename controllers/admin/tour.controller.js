@@ -100,24 +100,25 @@ module.exports.list = async (req, res) => {
     totalRecord: totalRecord
   };
 
-  for (let item of tourList) {
+  for (const item of tourList) {
     if (item.createdBy) {
       const infoAccountCreated = await AccountAdmin.findOne({
-        _id: item.createdBy,
+        _id: item.createdBy
       })
-      item.createdByFullName = infoAccountCreated ? infoAccountCreated.fullName : ""
+      item.createdByFullName = infoAccountCreated ? infoAccountCreated.fullName : "";
     } else {
-      item.createdByFullName = ""
+      item.createdByFullName = "";
     }
 
     if (item.updatedBy) {
       const infoAccountUpdated = await AccountAdmin.findOne({
-        _id: item.updatedBy,
+        _id: item.updatedBy
       })
-      item.updatedByFullName = infoAccountUpdated ? infoAccountUpdated.fullName : ""
+      item.updatedByFullName = infoAccountUpdated ? infoAccountUpdated.fullName : "";
     } else {
-      item.updatedByFullName = ""
+      item.updatedByFullName = "";
     }
+
 
     item.createdAtFormat = moment(item.createdAt).format("HH:mm - DD/MM/YYYY");
     item.updatedAtFormat = moment(item.updatedAt).format("HH:mm - DD/MM/YYYY");
@@ -286,10 +287,10 @@ module.exports.editPatch = async (req, res) => {
 }
 module.exports.trash = async (req, res) => {
   // loc theo tim kiem
-    const find = {
+  const find = {
     deleted: true
   }
-    if (req.query.keyword) {
+  if (req.query.keyword) {
     const keyword = slugify(req.query.keyword, {
       lower: true
     });
@@ -330,14 +331,18 @@ module.exports.trash = async (req, res) => {
       const infoAccountCreated = await AccountAdmin.findOne({
         _id: item.createdBy
       })
-      item.createdByFullName = infoAccountCreated.fullName;
+      item.createdByFullName = infoAccountCreated ? infoAccountCreated.fullName : "";
+    } else {
+      item.createdByFullName = "";
     }
 
     if (item.deletedBy) {
       const infoAccountDeleted = await AccountAdmin.findOne({
         _id: item.deletedBy
       })
-      item.deletedByFullName = infoAccountDeleted.fullName;
+      item.deletedByFullName = infoAccountDeleted ? infoAccountDeleted.fullName : "";
+    } else {
+      item.deletedByFullName = "";
     }
 
     item.createdAtFormat = moment(item.createdAt).format("HH:mm - DD/MM/YYYY");
@@ -453,7 +458,7 @@ module.exports.changemultiTrash = async (req, res) => {
 module.exports.undoTrash = async (req, res) => {
   try {
     const id = req.params.id;
-    
+
     await Tour.updateOne({
       _id: id
     }, {
@@ -475,7 +480,7 @@ module.exports.undoTrash = async (req, res) => {
 module.exports.deleteTrash = async (req, res) => {
   try {
     const id = req.params.id;
-    
+
     await Tour.deleteOne({
       _id: id
     })

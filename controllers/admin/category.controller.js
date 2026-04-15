@@ -200,9 +200,7 @@ module.exports.edit = async (req, res) => {
 }
 module.exports.deletePatch = async (req, res) => {
   try {
-
     const id = req.params.id
-
     await Category.updateOne({
       _id: id
     }, {
@@ -210,7 +208,7 @@ module.exports.deletePatch = async (req, res) => {
       deletedBy: req.account.id,
       deletedAt: Date.now()
     })
-    req.flash("success", "Xoa thanh cong")``
+    req.flash("success", "Xoa thanh cong")
     res.json({
       code: "success"
     })

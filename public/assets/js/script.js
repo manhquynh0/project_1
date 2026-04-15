@@ -1,6 +1,6 @@
 // Menu Mobile
 const buttonMenuMobile = document.querySelector(".header .inner-menu-mobile");
-if(buttonMenuMobile) {
+if (buttonMenuMobile) {
   const menu = document.querySelector(".header .inner-menu");
 
   // Click vào button mở menu
@@ -10,7 +10,7 @@ if(buttonMenuMobile) {
 
   // Click vào overlay đóng menu
   const overlay = menu.querySelector(".inner-overlay");
-  if(overlay) {
+  if (overlay) {
     overlay.addEventListener("click", () => {
       menu.classList.remove("active");
     });
@@ -28,7 +28,7 @@ if(buttonMenuMobile) {
 
 // Box Address Section 1
 const boxAddressSection1 = document.querySelector(".section-1 .inner-form .inner-box.inner-address");
-if(boxAddressSection1) {
+if (boxAddressSection1) {
   // Ẩn/hiện box suggest
   const input = boxAddressSection1.querySelector(".inner-input");
 
@@ -45,7 +45,7 @@ if(boxAddressSection1) {
   listItem.forEach(item => {
     item.addEventListener("mousedown", () => {
       const title = item.querySelector(".inner-item-title").innerHTML.trim();
-      if(title) {
+      if (title) {
         input.value = title;
       }
     })
@@ -55,7 +55,7 @@ if(boxAddressSection1) {
 
 // Box User Section 1
 const boxUserSection1 = document.querySelector(".section-1 .inner-form .inner-box.inner-user");
-if(boxUserSection1) {
+if (boxUserSection1) {
   // Hiện box quantity
   const input = boxUserSection1.querySelector(".inner-input");
 
@@ -103,7 +103,7 @@ if(boxUserSection1) {
       const parent = button.parentNode;
       const boxNumber = parent.querySelector(".inner-number");
       const number = parseInt(boxNumber.innerHTML.trim());
-      if(number > 0) {
+      if (number > 0) {
         const numberUpdate = number - 1;
         boxNumber.innerHTML = numberUpdate;
         updateQuantityInput();
@@ -115,7 +115,7 @@ if(boxUserSection1) {
 
 // Clock Expire
 const clockExpire = document.querySelector("[clock-expire]");
-if(clockExpire) {
+if (clockExpire) {
   const expireDateTimeString = clockExpire.getAttribute("clock-expire");
 
   // Chuyển đổi chuỗi thời gian thành đối tượng Date
@@ -125,7 +125,7 @@ if(clockExpire) {
   const updateClock = () => {
     const now = new Date();
     const remainingTime = expireDateTime - now; // quy về đơn vị mili giây
-    
+
     if (remainingTime > 0) {
       const days = Math.floor(remainingTime / (24 * 60 * 60 * 1000));
       // Tính số ngày, 24 * 60 * 60 * 1000 Tích của các số này = số mili giây trong 1 ngày
@@ -155,13 +155,14 @@ if(clockExpire) {
   }
 
   // Gọi hàm cập nhật đồng hồ mỗi giây
+  updateClock();
   const intervalClock = setInterval(updateClock, 1000);
 }
 // End Clock Expire
 
 // Box Filter
 const buttonFilterMobile = document.querySelector(".section-9 .inner-filter-mobile");
-if(buttonFilterMobile) {
+if (buttonFilterMobile) {
   const boxLeft = document.querySelector(".section-9 .inner-left");
   buttonFilterMobile.addEventListener("click", () => {
     boxLeft.classList.add("active");
@@ -176,7 +177,7 @@ if(buttonFilterMobile) {
 
 // Box Tour Info
 const boxTourInfo = document.querySelector(".box-tour-info");
-if(boxTourInfo) {
+if (boxTourInfo) {
   const buttonReadMore = boxTourInfo.querySelector(".inner-read-more button");
   buttonReadMore.addEventListener("click", () => {
     boxTourInfo.classList.add("active");
@@ -192,7 +193,7 @@ AOS.init();
 
 // Swiper Section 2
 const swiperSection2 = document.querySelector(".swiper-section-2");
-if(swiperSection2) {
+if (swiperSection2) {
   new Swiper('.swiper-section-2', {
     slidesPerView: 1,
     spaceBetween: 20,
@@ -214,7 +215,7 @@ if(swiperSection2) {
 
 // Swiper Section 3
 const swiperSection3 = document.querySelector(".swiper-section-3");
-if(swiperSection3) {
+if (swiperSection3) {
   new Swiper('.swiper-section-3', {
     slidesPerView: 1,
     spaceBetween: 20,
@@ -240,7 +241,7 @@ if(swiperSection3) {
 
 // Swiper Box Images
 const boxImages = document.querySelector(".box-images");
-if(boxImages) {
+if (boxImages) {
   const swiperBoxImagesThumb = new Swiper(".swiper-box-images-thumb", {
     spaceBetween: 5,
     slidesPerView: 4,
@@ -262,21 +263,42 @@ if(boxImages) {
 
 // Zoom Box Images Main
 const boxImagesMain = document.querySelector(".box-images .inner-images-main");
-if(boxImagesMain) {
+if (boxImagesMain) {
   new Viewer(boxImagesMain);
 }
 // End Zoom Box Images Main
 
 // Box Tour Schedule
 const boxTourSchedule = document.querySelector(".box-tour-schedule");
-if(boxTourSchedule) {
+if (boxTourSchedule) {
   new Viewer(boxTourSchedule);
 }
 // End Box Tour Schedule
 
+const showPageAlert = (message, type = "success") => {
+  const oldAlert = document.querySelector("[alert-time]");
+  if (oldAlert) {
+    oldAlert.remove();
+  }
+
+  const alert = document.createElement("div");
+  alert.className = `alert alert-${type}`;
+  alert.setAttribute("alert-time", "3000");
+
+  const span = document.createElement("span");
+  span.textContent = message;
+  alert.appendChild(span);
+
+  document.body.appendChild(alert);
+
+  setTimeout(() => {
+    alert.remove();
+  }, 3000);
+}
+
 // Email Form
 const emailForm = document.querySelector("#email-form");
-if(emailForm) {
+if (emailForm) {
   const validation = new JustValidate('#email-form');
 
   validation
@@ -291,12 +313,13 @@ if(emailForm) {
       },
     ])
     .onSuccess((event) => {
+      event.preventDefault();
       const email = event.target.email.value;
-      
+
       const dataFinal = {
         email: email,
       };
-      
+
       fetch(`/contact/create`, {
         method: "POST",
         headers: {
@@ -306,22 +329,25 @@ if(emailForm) {
       })
         .then(res => res.json())
         .then(data => {
-          if(data.code == "error") {
-            alert(data.message);
+          if (data.code == "error") {
+            showPageAlert(data.message, "error");
+            return;
           }
 
-          if(data.code == "success") {
-            window.location.reload();
+          if (data.code == "success") {
+            showPageAlert(data.message || "Gửi Email đăng kí thành công");
+            emailForm.reset();
+            validation.refresh();
           }
         })
     })
-  ;
+    ;
 }
 // End Email Form
 
 // Coupon Form
 const couponForm = document.querySelector("#coupon-form");
-if(couponForm) {
+if (couponForm) {
   const validation = new JustValidate('#coupon-form');
 
   validation
@@ -329,13 +355,13 @@ if(couponForm) {
       const coupon = event.target.coupon.value;
       console.log(coupon);
     })
-  ;
+    ;
 }
 // End Email Form
 
 // Order Form
 const orderForm = document.querySelector("#order-form");
-if(orderForm) {
+if (orderForm) {
   const validation = new JustValidate('#order-form');
 
   validation
@@ -387,7 +413,7 @@ if(orderForm) {
         }
       })
 
-      if(cart.length > 0) {
+      if (cart.length > 0) {
         const dataFinal = {
           fullName: fullName,
           phone: phone,
@@ -405,11 +431,11 @@ if(orderForm) {
         })
           .then(res => res.json())
           .then(data => {
-            if(data.code == "error") {
+            if (data.code == "error") {
               alert(data.message);
             }
-  
-            if(data.code == "success") {
+
+            if (data.code == "success") {
               // Cập nhật lại giỏ hàng
               let cart = JSON.parse(localStorage.getItem("cart"));
               cart = cart.filter(item => item.checked == false);
@@ -436,7 +462,7 @@ if(orderForm) {
         alert("Vui lòng đặt ít nhất 1 tour!");
       }
     })
-  ;
+    ;
 
   // List Input Method
   const listInputMethod = orderForm.querySelectorAll("input[name='method']");
@@ -457,7 +483,7 @@ if(orderForm) {
 
 // Alert
 const alertTime = document.querySelector("[alert-time]");
-if(alertTime) {
+if (alertTime) {
   let time = alertTime.getAttribute("alert-time");
   time = time ? parseInt(time) : 4000;
   setTimeout(() => {
@@ -468,7 +494,7 @@ if(alertTime) {
 
 // Box Filter
 const boxFilter = document.querySelector(".box-filter");
-if(boxFilter) {
+if (boxFilter) {
   const url = new URL(`${window.location.origin}/search`);
 
   const buttonApply = boxFilter.querySelector(".inner-button");
@@ -486,7 +512,7 @@ if(boxFilter) {
   buttonApply.addEventListener("click", () => {
     filterList.forEach(name => {
       const value = boxFilter.querySelector(`[name="${name}"]`).value;
-      if(value) {
+      if (value) {
         url.searchParams.set(name, value);
       } else {
         url.searchParams.delete(name);
@@ -500,7 +526,7 @@ if(boxFilter) {
 
 // Form Search
 const formSearch = document.querySelector("[form-search]");
-if(formSearch) {
+if (formSearch) {
   const url = new URL(`${window.location.origin}/search`);
 
   formSearch.addEventListener("submit", (event) => {
@@ -508,7 +534,7 @@ if(formSearch) {
 
     // Điểm đến
     const locationTo = formSearch.locationTo.value;
-    if(locationTo) {
+    if (locationTo) {
       url.searchParams.set("locationTo", locationTo);
     } else {
       url.searchParams.delete("locationTo");
@@ -516,21 +542,21 @@ if(formSearch) {
 
     // Số lượng
     const stockAdult = parseInt(formSearch.querySelector("[stock-adult]").innerHTML);
-    if(stockAdult > 0) {
+    if (stockAdult > 0) {
       url.searchParams.set("stockAdult", stockAdult);
     } else {
       url.searchParams.delete("stockAdult");
     }
 
     const stockChildren = parseInt(formSearch.querySelector("[stock-children]").innerHTML);
-    if(stockChildren > 0) {
+    if (stockChildren > 0) {
       url.searchParams.set("stockChildren", stockChildren);
     } else {
       url.searchParams.delete("stockChildren");
     }
 
     const stockBaby = parseInt(formSearch.querySelector("[stock-baby]").innerHTML);
-    if(stockBaby > 0) {
+    if (stockBaby > 0) {
       url.searchParams.set("stockBaby", stockBaby);
     } else {
       url.searchParams.delete("stockBaby");
@@ -538,7 +564,7 @@ if(formSearch) {
 
     // Ngày khởi hành
     const departureDate = formSearch.departureDate.value;
-    if(departureDate) {
+    if (departureDate) {
       url.searchParams.set("departureDate", departureDate);
     } else {
       url.searchParams.delete("departureDate");
@@ -551,7 +577,7 @@ if(formSearch) {
 
 // Box Tour Detail
 const boxTourDetail = document.querySelector(".box-tour-detail");
-if(boxTourDetail) {
+if (boxTourDetail) {
   // Bước 1
   const inputStockAdult = document.querySelector("[input-stock-adult]");
   const inputStockChildren = document.querySelector("[input-stock-children]");
@@ -593,7 +619,7 @@ if(boxTourDetail) {
     const quantityBaby = parseInt(inputStockBaby.value);
     const locationFrom = boxTourDetail.querySelector("[location-from]").value;
 
-    if(quantityAdult > 0 || quantityChildren > 0 || quantityBaby > 0) {
+    if (quantityAdult > 0 || quantityChildren > 0 || quantityBaby > 0) {
       const cartItem = {
         tourId: tourId,
         quantityAdult: quantityAdult,
@@ -604,9 +630,9 @@ if(boxTourDetail) {
       };
 
       const cart = JSON.parse(localStorage.getItem("cart"));
-      
+
       const indexItemExist = cart.findIndex(item => item.tourId == tourId);
-      if(indexItemExist != -1) {
+      if (indexItemExist != -1) {
         cart[indexItemExist] = cartItem;
       } else {
         cart.push(cartItem);
@@ -621,14 +647,14 @@ if(boxTourDetail) {
 
 // Initial Cart
 const cart = localStorage.getItem("cart");
-if(!cart) {
+if (!cart) {
   localStorage.setItem("cart", JSON.stringify([]));
 }
 // End Initial Cart
 
 // Mini Cart
 const miniCart = document.querySelector("[mini-cart]");
-if(miniCart) {
+if (miniCart) {
   const cart = JSON.parse(localStorage.getItem("cart"));
   miniCart.innerHTML = cart.length;
 }
@@ -647,7 +673,7 @@ const drawCart = () => {
   })
     .then(res => res.json())
     .then(data => {
-      if(data.code == "success") {
+      if (data.code == "success") {
         // Hiển thị các item
         const htmlCart = data.cart.map(item => `
           <div class="inner-tour-item">
@@ -758,7 +784,7 @@ const drawCart = () => {
 
         // Tính tổng tiền
         const subTotalPrice = data.cart.reduce((sum, item) => {
-          if(item.checked) {
+          if (item.checked) {
             return sum + ((item.priceNewAdult * item.quantityAdult) + (item.priceNewChildren * item.quantityChildren) + (item.priceNewBaby * item.quantityBaby));
           } else {
             return sum;
@@ -766,7 +792,7 @@ const drawCart = () => {
         }, 0);
         const discount = 0;
         const totalPrice = subTotalPrice - discount;
-        
+
         const cartSubTotal = document.querySelector("[cart-sub-total]");
         cartSubTotal.innerHTML = subTotalPrice.toLocaleString("vi-VN");
 
@@ -826,7 +852,53 @@ const drawCart = () => {
 }
 
 const pageCart = document.querySelector("[page-cart]");
-if(pageCart) {
+if (pageCart) {
   drawCart();
 }
 // End Page Cart
+// Pagination
+const pagination = document.querySelector("[pagination]");
+const prevButton = document.querySelector(".prev-button");
+const nextButton = document.querySelector(".next-button");
+if (pagination) {
+  const url = new URL(window.location.href);
+  const valueCurrent = url.searchParams.get("page") || "1";
+  const currentPage = parseInt(valueCurrent) || 1;
+  const totalPages = parseInt(pagination.dataset.totalPages) || 1;
+
+  // Lắng nghe thay đổi lựa chọn
+  pagination.addEventListener("change", () => {
+    const value = pagination.value;
+    if (value) {
+      url.searchParams.set("page", value);
+    } else {
+      url.searchParams.delete("page");
+    }
+
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc định
+  pagination.value = currentPage;
+
+  if (prevButton) {
+    prevButton.disabled = currentPage <= 1;
+    prevButton.addEventListener("click", () => {
+      if (currentPage > 1) {
+        url.searchParams.set("page", currentPage - 1);
+        window.location.href = url.href;
+      }
+    })
+  }
+
+  if (nextButton) {
+    nextButton.disabled = currentPage >= totalPages;
+    nextButton.addEventListener("click", () => {
+      if (currentPage < totalPages) {
+        url.searchParams.set("page", currentPage + 1);
+        window.location.href = url.href;
+      }
+    })
+  }
+}
+// End Filter Status

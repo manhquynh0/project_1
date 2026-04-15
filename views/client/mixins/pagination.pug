@@ -1,0 +1,12 @@
+mixin pagination(pagination, listLength)
+  .top
+    button.prev-button(type="button") ← Trang trước
+
+    select(class="inner-pagination" pagination data-total-pages=pagination.totalPage)
+      - for (let i = 1; i <= pagination.totalPage; i++)
+        option(value=i selected=(i == pagination.currentPage)) Trang #{i}
+
+    button.next-button(type="button") Trang sau →
+
+  span.inner-label
+    | Hiển thị #{pagination.skip + 1} - #{pagination.skip + listLength} của #{pagination.totalRecord}
